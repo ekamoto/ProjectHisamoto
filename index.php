@@ -10,7 +10,6 @@ if (isset($_SESSION['id_user'])) {
         <title>Gerenciador</title>
         <link rel="stylesheet" type="text/css" href="css/login.css" />
     </head>
-    <!--<body style="background-image: url('img/fundo3.jpg'); background-repeat: no-repeat; background-size: 100% 100%;  margin:0; padding:0;">-->
     <body style="background-repeat: no-repeat; background-size: 100% 100%;  margin:0; padding:0; ">
         <div id="container" style="height: 350px;">
             <br/>
