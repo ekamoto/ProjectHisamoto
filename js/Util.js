@@ -176,9 +176,9 @@ Util.isUndefined = function(x) {
 };
 
 Util.ajustaDataPortugues = function(data) {
-    var data = new Date(data);
-    var dia = parseInt(data.getDate(), 10);
-    var mes = parseInt(data.getMonth(), 10);
+    var dataRetorno = new Date(data.substr(0, 4), data.substr(5, 2) - 1, data.substr(8, 2), data.substr(11, 2), data.substr(14, 2), data.substr(17, 2));
+    var dia = parseInt(dataRetorno.getDate(), 10);
+    var mes = parseInt(dataRetorno.getMonth(), 10);
     if (dia < 10) {
         dia = "0" + dia;
     }
@@ -186,7 +186,7 @@ Util.ajustaDataPortugues = function(data) {
     if (mes < 10) {
         mes = "0" + mes;
     }
-    return dia + "/" + mes + "/" + data.getFullYear();
+    return dia + "/" + mes + "/" + dataRetorno.getFullYear();
 };
 
 Util.dataIniMaiorDataFim = function(dtIni, dtFim) {
