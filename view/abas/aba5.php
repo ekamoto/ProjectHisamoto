@@ -1,1 +1,1 @@
-<?php //listarAnotacoes($dados); ?>
+<?php listarAnotacoes($dados); ?>
