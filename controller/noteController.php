@@ -37,7 +37,6 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
    }
 }
 
-//Arrumar daqui para baixo metodologia antiga
 if (isset($_REQUEST) && !empty($_REQUEST)) {
    $dados = array();
    $dados = getDadosRequest($_REQUEST);

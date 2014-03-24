@@ -117,7 +117,7 @@ echo $admin ? '[ADM]' : ''; ?></a></li>
          <li><a href="#" name="#tab1">Contas</a></li>
          <li><a href="#" name="#tab2">Contas Atrasadas</a></li>
          <li><a href="#" name="#tab3">Gr&aacute;ficos</a></li>
-         <li><a href="#" name="#tab4">Manual</a></li>
+         <!--<li><a href="#" name="#tab4">Manual</a></li>-->
          <li><a href="#" name="#tab5">Anota&ccedil;&otilde;es</a></li>
       </ul>
       <div id="content" style="display:none;"> 
@@ -130,9 +130,11 @@ echo $admin ? '[ADM]' : ''; ?></a></li>
          <div id="tab3">
 <?php include 'view/abas/aba3.php'; ?>                
          </div>
+          <!--
          <div id="tab4" style="background-color: #FFFAF0; width:90%;">
 <?php include 'view/abas/aba4.php'; ?>                
          </div>
+          -->
          <div id="tab5">
 <?php include 'view/abas/aba5.php'; ?>                
          </div>
@@ -324,7 +326,7 @@ echo $admin ? '[ADM]' : ''; ?></a></li>
                      <strong>Descri&ccedil;&atilde;o:</strong>
                   </td>
                   <td>
-                     <textarea id="descricao_anotacao" class="dados_cad_anotacao" style="width: 300px; height: 100px; text-align:justify;" maxlength="1000"></textarea>
+                     <textarea id="descricao_anotacao" class="dados_cad_anotacao" style="width: 400px; height: 250px; text-align:justify; background-color:#FFFACD;" maxlength="1000"></textarea>
                   </td>
                </tr>
                <tr>
@@ -357,7 +359,7 @@ echo $admin ? '[ADM]' : ''; ?></a></li>
                   </td>
                   <td>
                      <input type="hidden" id="edit_id_note"/>
-                     <textarea id="edit_descricao_anotacao" class="dados_edit_anotacao" style="width: 300px; height: 100px; text-align:justify;" maxlength="1000"></textarea>
+                     <textarea id="edit_descricao_anotacao" class="dados_edit_anotacao" style="width: 400px; height: 250px; text-align:justify; background-color:#FFFACD; " maxlength="1000"></textarea>
                   </td>
                </tr>
                <tr>

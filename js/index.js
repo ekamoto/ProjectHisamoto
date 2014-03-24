@@ -313,7 +313,7 @@ $(function() {
         location.href = "index.php";
     });
     $(".add_note").on("click", function() {
-        sistema.abrirDialog(".nova_anotacao", "Cadastro de Anotação", 450, 300);
+        sistema.abrirDialog(".nova_anotacao", "Cadastro de Anotação", 550, 400);
     });
     $(".deletar_note").on("click", function() {
         var idNote = $(this).attr("id_note");
@@ -328,7 +328,7 @@ $(function() {
         var idNote = $(this).attr("id_note");
         noteController.carregarDados({action:"carregarDados", idNote:idNote},
         function() {
-            sistema.abrirDialog(".ed_anotacao", "Editar Anotação", 450, 300);
+            sistema.abrirDialog(".ed_anotacao", "Editar Anotação", 550, 400);
             bloquearTela(false);
         });
     });
