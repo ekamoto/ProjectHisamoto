@@ -967,7 +967,9 @@ function adicionarContaFixa($dados) {
     if (isset($dados['date']) && !empty($dados['date'])) {
         $dados['date'] = ajustaData($dados['date']);
     }
+    
     for ($i = 1; $i <= $conf_contas['qtd_meses_conta_fixa']; $i++) {
+        
         $sql = 'insert into expenses (  title, 
                                         qtd_portion, 
                                         qtd_portion_payment, 
@@ -999,15 +1001,11 @@ function adicionarContaFixa($dados) {
         $statemente->bindParam(11, $dados['expiration_day'], PDO::PARAM_INT);
         $statemente->bindParam(12, $dados['enterprise_id'], PDO::PARAM_INT);
         $executa = $statemente->execute();
-        if ($executa) {
-            return true;
+        if (!$executa) {
+            return false;
         }
-        $erro = $statemente->errorInfo();
-        print_r($erro);
-        die;
         $dados['date'] = addMes($dados['date']);
     }
-    $pdo = NULL;
     return $executa;
 }
 
