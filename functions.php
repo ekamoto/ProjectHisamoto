@@ -296,7 +296,7 @@ function listarContas($dados) {
             }
             $totalSalarios = getSomaSalarioGrupo();
             $sobra = 0;
-            $sobra = $totalSalarios - $total;
+            $sobra = $totalSalarios - $total_geral;
             echo '
              <tr>
                 <td colspan="12" style="text-align:right;">
