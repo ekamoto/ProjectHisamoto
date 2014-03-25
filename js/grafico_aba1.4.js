@@ -38,3 +38,21 @@ $(function () {
         });
     }
 });
+
+//  google.load("visualization", "1", {packages:["corechart"]});
+//  google.setOnLoadCallback(drawChart);
+//  function drawChart(valor) {
+//      var teste = new Array();
+//      
+//    var data = google.visualization.arrayToDataTable(teste);
+//
+//    var options = {
+//      title: 'My Daily Activities'
+//    };
+//
+//    var chart = new google.visualization.PieChart(document.getElementById('grafico4'));
+//    chart.draw(data, options);
+//  }
+//  
+//  
+  

@@ -184,9 +184,11 @@ function listarContas($dados) {
                     <th>
                         <strong>QtdParc</strong>
                     </th>
+                    <!--
                     <th>
                         <strong>QtParPag</strong>
                     </th>
+                    -->
                     <th>
                         <strong>ValTot</strong>
                     </th>
@@ -264,9 +266,11 @@ function listarContas($dados) {
                         <td>
                             <input type="text" id="qtd_portion_' . $value['id'] . '" value="' . $value['qtd_portion'] . '" size="6" onKeyPress="return(SomenteNumero(event))" style="display:' . $display . ';">
                         </td>
+                        <!--
                         <td>
                             <input type="text" id="qtd_portion_payment_' . $value['id'] . '" value="' . $value['qtd_portion_payment'] . '" size="6" onKeyPress="return(SomenteNumero(event))" style="display:' . $display . ';">
                         </td>
+                        -->
                         <td>
                             <input type="text" id="total_value_' . $value['id'] . '" value="' . $value['total_value'] . '" size="6" onKeyPress="return(FormataReais(this, ' . "'.'" . ', ' . "','" . ', event))">
                         </td>
@@ -289,7 +293,7 @@ function listarContas($dados) {
             if ($cont == 1) {
                 echo '
                 <tr>
-                    <td colspan="12" style="text-align:left;">
+                    <td colspan="11" style="text-align:left;">
                         <strong>Nenhum registro encontrado!</strong>
                     </td>
                 </tr>';
@@ -299,7 +303,7 @@ function listarContas($dados) {
             $sobra = $totalSalarios - $total_geral;
             echo '
              <tr>
-                <td colspan="12" style="text-align:right;">
+                <td colspan="11" style="text-align:right;">
                     <strong>Entrada(s)[' . $totalSalarios . '] - Saída(s)[' . $total . ']:</strong> 
                         ' . $sobra . '
                 </td>
@@ -315,7 +319,7 @@ function listarContas($dados) {
             $titulo_conta_fixa = "-S&atilde;o contas que aparecer&atilde;o todos os meses.\n-Quando &eacute; feito o cadastro de uma conta desse tipo, o sistema gera a mesma conta em todos os meses durante 10 anos, esse n&uacute;mero pode ser alterado pelo administrador do sistema.\nEx: conta de energia, &aacute;gua, etc.";
             echo '
             <tr>
-                <td colspan="12" style="text-align:right;">
+                <td colspan="11" style="text-align:right;">
                     <div style="cursor: help; background-color:#98FB98; width:80px; dislplay:inline; float:left; text-align:center; ' . $css . '" title="' . $titulo_conta_normal . '" ><i>Normal</i></div>
                     <div style="cursor: help; background-color:#E9967A; width:80px; dislplay:inline; float:left; margin-left:10px; text-align:center; ' . $css . '" title="' . $titulo_conta_parcelada . '"><i>Parcelado</i></div>
                     <div style="cursor: help; background-color:#ADD8E6; width:80px; dislplay:inline; float:left; margin-left:10px; text-align:center; ' . $css . '" title="' . $titulo_conta_fixa . '"><i>Fixo</i></div>
@@ -401,9 +405,11 @@ function listarContasAtrasadas($dados) {
                     <th>
                         <strong>QtdParc</strong>
                     </th>
+                    <!--
                     <th>
                         <strong>QtParPag</strong>
                     </th>
+                    -->
                     <th>
                         <strong>ValTot</strong>
                     </th>
@@ -467,9 +473,11 @@ function listarContasAtrasadas($dados) {
                         <td>
                             <input type="text" id="qtd_portion_atrasada_' . $value['id'] . '" value="' . $value['qtd_portion'] . '" size="6" onKeyPress="return(SomenteNumero(event))" style="display:' . $display . ';">
                         </td>
+                        <!--
                         <td>
                             <input type="text" id="qtd_portion_payment_atrasada_' . $value['id'] . '" value="' . $value['qtd_portion_payment'] . '" size="6" onKeyPress="return(SomenteNumero(event))" style="display:' . $display . ';">
                         </td>
+                        -->
                         <td>
                             <input type="text" id="total_value_atrasada_' . $value['id'] . '" value="' . $value['total_value'] . '" size="6" onKeyPress="return(FormataReais(this, ' . "'.'" . ', ' . "','" . ', event))">
                         </td>
@@ -494,7 +502,7 @@ function listarContasAtrasadas($dados) {
             if ($cont == 1) {
                 echo '
                 <tr>
-                    <td colspan="12" style="text-align:left;">
+                    <td colspan="11" style="text-align:left;">
                         <strong>Nenhum registro encontrado!</strong>
                     </td>
                 </tr>';
@@ -507,7 +515,7 @@ function listarContasAtrasadas($dados) {
             $titulo_conta_fixa = "-S&atilde;o contas que aparecer&atilde;o todos os meses.\n-Quando &eacute; feito o cadastro de uma conta desse tipo, o sistema gera a mesma conta em todos os meses durante 10 anos, esse n&uacute;mero pode ser alterado pelo administrador do sistema.\nEx: conta de energia, &aacute;gua, etc.";
             echo '
             <tr>
-                <td colspan="12" style="text-align:right;">
+                <td colspan="11" style="text-align:right;">
                     <div style="cursor: help; background-color:#98FB98; width:80px; dislplay:inline; float:left; text-align:center; ' . $css . '" title="' . $titulo_conta_normal . '" ><i>Normal</i></div>
                     <div style="cursor: help; background-color:#E9967A; width:80px; dislplay:inline; float:left; margin-left:10px; text-align:center; ' . $css . '" title="' . $titulo_conta_parcelada . '"><i>Parcelado</i></div>
                     <div style="cursor: help; background-color:#ADD8E6; width:80px; dislplay:inline; float:left; margin-left:10px; text-align:center; ' . $css . '" title="' . $titulo_conta_fixa . '"><i>Fixo</i></div>

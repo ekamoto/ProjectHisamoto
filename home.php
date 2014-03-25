@@ -203,7 +203,7 @@ echo $admin ? '[ADM]' : ''; ?></a></li>
                      <strong>Qtd.ParcPag.:</strong>
                   </td>
                   <td>
-                     <input type="text" id="qtd_portion_payment" name="qtd_portion_payment" class="dados_cad_conta" title="Quantidade de parcelas pagas" size="5" onKeyPress="return(SomenteNumero(event))"/>
+                     <input type="text" id="qtd_portion_payment" name="qtd_portion_payment" class="dados_cad_conta" title="Quantidade de parcelas pagas" size="5" onKeyPress="return(SomenteNumero(event))" value="0"/>
                   </td>
                </tr>
                <tr>
@@ -592,6 +592,7 @@ echo $admin ? '[ADM]' : ''; ?></a></li>
       <script type="text/javascript" src="js/lib/CodeSeven-toastr-0ad3ca3/toastr.min.js"></script>
       <script type="text/javascript" src="js/lib/Hightcharts/highcharts.js"></script>
       <script type="text/javascript" src="js/lib/Hightcharts/modules/exporting.js"></script>
+      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
       <script type="text/javascript" src="js/grafico_aba1.js"></script>
       <script type="text/javascript" src="js/grafico_aba1.2.js"></script>
       <script type="text/javascript" src="js/grafico_aba1.3.js"></script>

@@ -294,7 +294,7 @@ $(function() {
         var tipo = $(this).val();
         if (parseInt(tipo, 10) === 1) {
             $("#qtd_portion, #portion_value").val('');
-            $(".quantidade_parcela, .valor_parcela, .qtd_parc_pagas").show();
+            $(".quantidade_parcela, .valor_parcela").show();
             $("#total_value").attr('readonly', 'readonly');
         } else {
             $("#qtd_portion, #portion_value").val('');
