@@ -29,4 +29,10 @@ function noteController() {
             noteView.setQtdAnotacaoNaoLida(json.cont);
         });
     };
+    this.getAnotacoesNaoLidas = function(data) {
+        this.noteDataService.getAnotacoesNaoLidas(data, 
+        function(json) {
+            noteView.setListaNotesNaoLidas(json);
+        });
+    };
 }

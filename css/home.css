@@ -22,3 +22,9 @@ body {
 
     width:100%;
 }
+
+.shadow {
+    box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.5);
+}

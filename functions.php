@@ -1339,6 +1339,23 @@ function getQtdAnotacoesNaoLidas() {
     return $dados['cont'];
 }
 
+function getAnotacoesNaoLidas() {
+    $pdo = conectar();
+    $dados = array();
+    $sql = "SELECT * FROM notes WHERE group_id = ? AND note_read =0";
+    $statemente = $pdo->prepare($sql);
+    $statemente->bindParam(1, $_SESSION['group_id'], PDO::PARAM_STR);
+    $executa = $statemente->execute();
+    if ($executa) {
+        if ($statemente) {
+            foreach ($statemente as $value) {
+                $dados[] = $value;
+            }
+        }
+    }
+    return $dados;
+}
+
 $dados = array();
 $titulo = '';
 $enterprise_id_filtro = '';

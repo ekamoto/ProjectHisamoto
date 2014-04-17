@@ -19,3 +19,16 @@ noteView.setQtdAnotacaoNaoLida = function(msg) {
         $("#anotacoes_nao_lidas").html(cont + " anotação(ões) não lida(s)");
     }
 };
+noteView.setListaNotesNaoLidas = function(listaNotes) {
+    $(".mensagem_sistema").html("");
+    $.each(listaNotes, function(key, note) {
+        var fieldset = $("<fieldset/>");
+        var legend = $("<legend>");
+        var checkbox = $("<input type=\"checkbox\" class=\"lido\" id_note=\"" + note.id + "\"\>");
+        legend.append(Util.ajustaDataPortugues(note.date_note));
+        fieldset.append(legend);
+        fieldset.append(checkbox);
+        fieldset.append(note.description);
+        $(".mensagem_sistema").append(fieldset);
+    });
+};

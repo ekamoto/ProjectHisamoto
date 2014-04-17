@@ -378,5 +378,10 @@ $(function() {
     $(".link_conta_atrasada").on("click", function() {
         alert("asdf");
     });
+    $("#anotacoes_nao_lidas").on("click", function() {
+        noteController.getAnotacoesNaoLidas(
+        {action:"listaAnotacoesNaoLidas"});
+        sistema.abrirDialog(".mensagem_sistema","Mensagens não lidas", 500, 300);
+    });
     $(".carregando").hide();
 });

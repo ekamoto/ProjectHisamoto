@@ -19,6 +19,10 @@ class noteController {
       }
       echo json_encode(array('ok' => (int) $retorno, 'msg' => $msg));
    }
+   
+   public function listaAnotacoesNaoLidas() {
+       echo json_encode(getAnotacoesNaoLidas());
+   }
 }
 
 if (isset($_REQUEST) && !empty($_REQUEST)) {
