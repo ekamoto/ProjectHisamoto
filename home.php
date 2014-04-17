@@ -21,30 +21,30 @@ include 'permission.php';
         <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu-v.css" />
         <link rel="stylesheet" type="text/css" href="js/lib/CodeSeven-toastr-0ad3ca3/toastr.css" />
         <link rel="stylesheet" type="text/css" href="js/lib/CodeSeven-toastr-0ad3ca3/toastr.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/flot.css" />
     </head>
     <body style="text-align: left; font-family: monospace;  background-repeat: no-repeat ; background-attachment: fixed; background-size: 100% 100%; margin:0; padding:0;">
         <div id="smoothmenu1" class="ddsmoothmenu">
             <ul>
-                <!--
+                <li class="editar_usuario">
+                    <a href="#">
+                        <?php echo '(', $_SESSION['name'], ')'; echo $admin ? '[ADM]' : ''; ?>
+                    </a>
+                </li>
                 <li>
                     <a href="#">Cadastros</a>
                     <ul>
                         <li class="add_usuario"><a href="#">Usu&aacute;rios</a></li>
                         <li class="add_empresa"><a href="#">Empresas</a></li>
+                        <li id="id_cadastrar"><a href="#">Conta</a></li>
+                        <li class="add_empresa"><a href="#">Empresa</a></li>
+                        <?php if ($admin): ?>
+                            <li class="add_usuario"><a href="#">Usu&aacute;rio</a></li>
+                            <li class="add_grupo"><a href="#">Grupo</a></li>
+                        <?php endif; ?>
+                        <li class="add_note"><a href="#">Anota&ccedil;&otilde;es</a></li>
                     </ul>
                 </li>
-                -->
-                <!--<li class="add_usuario"><a href="#">Usu&aacute;rios</a></li>-->
-                <li class="editar_usuario"><a href="#"><?php echo '(', $_SESSION['name'], ')';
-echo $admin ? '[ADM]' : '';
-?></a></li>
-                <li id="id_cadastrar"><a href="#">Conta</a></li>
-                <li class="add_empresa"><a href="#">Empresa</a></li>
-<?php if ($admin): ?>
-                    <li class="add_usuario"><a href="#">Usu&aacute;rio</a></li>
-                    <li class="add_grupo"><a href="#">Grupo</a></li>
-<?php endif; ?>
-                <li class="add_note"><a href="#">Anota&ccedil;&otilde;es</a></li>
                 <li class="deslogar"><a href="#">Sair</a></li>
             </ul>
             <br style="clear: left" />
@@ -61,12 +61,16 @@ echo $admin ? '[ADM]' : '';
                         <input type="text" class="data" id="data_inicio" name="data_inicio" value="<?php echo $data_inicio ? $data_inicio : $dados['data_inicio'] = '01/' . date('m/Y'); ?>">
                         <strong>a</strong>
                         <input type="text" class="data" id="data_fim" name="data_fim" value="<?php echo $data_fim ? : $dados['data_fim'] = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')) . date('/m/Y'); ?>">
-<?php //getSelectMes($mes);   ?>
+                        <?php //getSelectMes($mes);   ?>
                         <div id="contas_atrasadas"></div>
                         <div id="anotacoes_nao_lidas"></div>
                     </td>
                     <td rowspan="4">
-                        <div id="grafico4" style="width: 30%; height: 20%;"></div>
+                        <div id="grafico4">
+                            <div class="demo-container">
+                                <div id="placeholder" class="demo-placeholder" style=" height: 200px;">&nbsp;</div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -74,13 +78,13 @@ echo $admin ? '[ADM]' : '';
                         <strong>Tipo:</strong>
                     </td>
                     <td>
-<?php getSelectTipoContaFiltro($dados); ?>
+                        <?php getSelectTipoContaFiltro($dados); ?>
                     </td>
                     <td>
                         <strong>Empresa:</strong>
                     </td>
                     <td>
-<?php echo getSelectEmpresaFiltro($enterprise_id_filtro); ?>
+                        <?php echo getSelectEmpresaFiltro($enterprise_id_filtro); ?>
                     </td>
                     <td>
                         <strong>Ordenado por:</strong>
@@ -99,9 +103,8 @@ echo $admin ? '[ADM]' : '';
                         <strong>Usu&aacute;rio:</strong>
                     </td>
                     <td colspan="5">
-<?php echo getUsuarios($user_expense_id); ?>&nbsp;&nbsp;
+                        <?php echo getUsuarios($user_expense_id); ?>&nbsp;&nbsp;
                         <input id="consultar_conta" type="submit" value="Consultar">
-
                     </td>
                 </tr>
                 <tr>
@@ -124,21 +127,21 @@ echo $admin ? '[ADM]' : '';
         </ul>
         <div id="content" style="display:none;"> 
             <div id="tab1">
-<?php include 'view/abas/aba1.php'; ?>
+                <?php include 'view/abas/aba1.php'; ?>
             </div>
             <div id="tab2">
-<?php include 'view/abas/aba2.php'; ?>
+                <?php include 'view/abas/aba2.php'; ?>
             </div>
             <div id="tab3">
-<?php include 'view/abas/aba3.php'; ?>                
+                <?php include 'view/abas/aba3.php'; ?>            
             </div>
             <!--
            <div id="tab4" style="background-color: #FFFAF0; width:90%;">
-<?php include 'view/abas/aba4.php'; ?>                
+                <?php include 'view/abas/aba4.php'; ?>                
            </div>
             -->
             <div id="tab5">
-<?php include 'view/abas/aba5.php'; ?>                
+                <?php include 'view/abas/aba5.php'; ?>                
             </div>
         </div>
         <div class="nova_conta">
@@ -149,7 +152,7 @@ echo $admin ? '[ADM]' : '';
                             <strong>Usu&aacute;rio:</strong>
                         </td>
                         <td>
-<?php echo getSelectUsuarios(); ?>
+                            <?php echo getSelectUsuarios(); ?>
                         </td>
                     </tr>
                     <tr>
@@ -157,7 +160,7 @@ echo $admin ? '[ADM]' : '';
                             <strong>Tipo:</strong>
                         </td>
                         <td>
-<?php echo getSelectTipoConta($dados); ?>
+                            <?php echo getSelectTipoConta($dados); ?>
                         </td>
                     </tr>
                     <tr>
@@ -165,7 +168,7 @@ echo $admin ? '[ADM]' : '';
                             <strong>Empresa:</strong>
                         </td>
                         <td>
-<?php echo getSelectEmpresa($dados); ?>
+                            <?php echo getSelectEmpresa($dados); ?>
                         </td>
                     </tr>
                     <tr>
@@ -393,7 +396,7 @@ echo $admin ? '[ADM]' : '';
                             <strong>Grupo:</strong>
                         </td>
                         <td>
-<?php echo getSelectGrupo($id_grupo); ?>
+                            <?php echo getSelectGrupo($id_grupo); ?>
                         </td>
                     </tr>
                     <tr>
@@ -484,7 +487,7 @@ echo $admin ? '[ADM]' : '';
                             <strong>Grupo:</strong>
                         </td>
                         <td>
-<?php echo getSelectGrupoEdit($id_grupo, $admin); ?>
+                            <?php echo getSelectGrupoEdit($id_grupo, $admin); ?>
                         </td>
                     </tr>
                     <tr>
@@ -594,7 +597,10 @@ echo $admin ? '[ADM]' : '';
         <script type="text/javascript" src="js/lib/CodeSeven-toastr-0ad3ca3/toastr.min.js"></script>
         <script type="text/javascript" src="js/lib/Hightcharts/highcharts.js"></script>
         <script type="text/javascript" src="js/lib/Hightcharts/modules/exporting.js"></script>
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script language="javascript" src="js/lib/flot/excanvas.min.js"></script>
+        <script language="javascript" src="js/lib/flot/jquery.flot.js"></script>
+        <script language="javascript" src="js/lib/flot/jquery.flot.pie.js"></script>
+        <script language="javascript" src="js/lib/flot/jquery.flot.pie.min.js"></script>
         <script type="text/javascript" src="js/grafico_aba1.js"></script>
         <script type="text/javascript" src="js/grafico_aba1.2.js"></script>
         <script type="text/javascript" src="js/grafico_aba1.3.js"></script>

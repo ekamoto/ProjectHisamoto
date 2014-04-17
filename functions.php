@@ -330,7 +330,8 @@ function listarContas($dados) {
             $dados_grafico_4 = '[';
             $dad = array();
             foreach ($qtd_contas_por_empresas as $value) {
-                $dad[] = '["' . $value['nome'] . '", ' . $value['cont'] . ']';
+                // $dad[] = '["' . $value['nome'] . '", ' . $value['cont'] . ']';
+                $dad[] = '{label:"' . $value['nome'] . '", data:' . $value['cont'] . '}';
             }
             if (!empty($dad)) {
                 $dados_grafico_4 .= implode(',', $dad) . ']';
