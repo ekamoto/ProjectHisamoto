@@ -64,7 +64,7 @@ function listarAnotacoes($dados) {
     $statemente = $pdo->prepare($sql);
     $executa = $statemente->execute();
     $cont = 0;
-    echo "<table border='1' class='gridtable' style='width:70%'>";
+    echo "<table border='1' class='gridtable shadow' style='width:70%'>";
     echo '<tr>
                     <th>
                         <strong>Id</strong>
@@ -166,7 +166,7 @@ function listarContas($dados) {
     $executa = $statemente->execute();
     if ($executa) {
         if ($statemente) {
-            echo "<table border='1' class='gridtable' style='width:70%'>";
+            echo "<table border='1' class='gridtable shadow' style='width:70%'>";
             echo '<tr>
                     <th></th>
                     <th>
@@ -388,7 +388,7 @@ function listarContasAtrasadas($dados) {
     $executa = $statemente->execute();
     if ($executa) {
         if ($statemente) {
-            echo "<table border='1' class='gridtable' style='width:70%'>";
+            echo "<table border='1' class='gridtable shadow' style='width:70%'>";
             echo '<tr>
                     <th></th>
                     <th>

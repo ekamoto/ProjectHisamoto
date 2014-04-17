@@ -22,9 +22,16 @@ include 'permission.php';
         <link rel="stylesheet" type="text/css" href="js/lib/CodeSeven-toastr-0ad3ca3/toastr.css" />
         <link rel="stylesheet" type="text/css" href="js/lib/CodeSeven-toastr-0ad3ca3/toastr.min.css" />
         <link rel="stylesheet" type="text/css" href="css/flot.css" />
+        <style>
+        .shadow {
+            box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.5);
+            -webkit-box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.5);
+        }
+        </style>
     </head>
     <body style="text-align: left; font-family: monospace;  background-repeat: no-repeat ; background-attachment: fixed; background-size: 100% 100%; margin:0; padding:0;">
-        <div id="smoothmenu1" class="ddsmoothmenu">
+        <div id="smoothmenu1" class="ddsmoothmenu shadow">
             <ul>
                 <li class="editar_usuario">
                     <a href="#">
@@ -49,9 +56,9 @@ include 'permission.php';
             </ul>
             <br style="clear: left" />
         </div>
-        <form id="form_filtro" action="home.php" method="POST">
-            <table cellspacing="0" class="gridtable">
-                <tr>
+        <form id="form_filtro" action="home.php" method="POST" >
+            <table cellspacing="0" class="gridtable shadow" >
+                <tr >
                     <td>
                         <strong>T&iacute;tulo:</strong>
                     </td>
@@ -126,7 +133,7 @@ include 'permission.php';
             <li><a href="#" name="#tab5">Anota&ccedil;&otilde;es</a></li>
         </ul>
         <div id="content" style="display:none;"> 
-            <div id="tab1">
+            <div id="tab1" >
                 <?php include 'view/abas/aba1.php'; ?>
             </div>
             <div id="tab2">
@@ -221,27 +228,20 @@ include 'permission.php';
                     </tr>
                     <tr>
                         <td>
-                            <strong>Desc.:</strong>
-                        </td>
-                        <td>
-                            <textarea id="description" name="description" class="dados_cad_conta" title="Descri&ccedil;&atilde;o da conta"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
                             <strong>Dia.Venc.:</strong>
                         </td>
                         <td>
                             <input type="text" id="expiration_day" name="expiration_day" class="dados_cad_conta" title="Dia do vencimento" size="5" onKeyPress="return(SomenteNumero(event))"/>
+                            &nbsp;&nbsp;<strong>Pago:</strong>
+                            <input type="checkbox" id="payment" name="payment" class="dados_cad_conta" />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <strong>Pago:</strong>
+                            <strong>Desc.:</strong>
                         </td>
                         <td>
-                            <!--<input type="text" id="payment" name="payment" class="dados_cad_conta" title="Flag para conta paga" size="3" onKeyPress="return(SomenteNumero(event))"/>-->
-                            <input type="checkbox" id="payment" name="payment" class="dados_cad_conta" />
+                            <textarea id="description" name="description" class="dados_cad_conta" title="Descri&ccedil;&atilde;o da conta"></textarea>
                         </td>
                     </tr>
                     <tr>
