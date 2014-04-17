@@ -12,32 +12,7 @@ include 'permission.php';
         <title>Gerenciador</title>
         <meta charset="UTF-8"/>
         <script type="text/javascript" src="js/lib/jquery-1.9.1pp.js"></script>
-        <style>
-            body {
-                -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-                -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-                -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-                background-color:#E4E4E4;
-                background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-                background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-                background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-                background-image:-webkit-gradient(
-                    linear,
-                    left top,
-                    left bottom,
-                    color-stop(0, #A7A7A7),
-                    color-stop(0.51, #E4E4E4)
-                    );
-                background-attachment:fixed;
-                font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-                font-size:12px;
-                height:100%;
-                margin:0px;
-                padding:0px;
-             
-                width:100%;
-            }
-        </style>
+        <link href="css/home.css" rel="stylesheet">
         <link href="js/lib/jquery-ui-1.10.3/themes/base/jquery.ui.dialog.css" rel="stylesheet">
         <link href="js/lib/jquery-ui-1.10.3/themes/smoothness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
