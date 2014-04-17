@@ -1145,7 +1145,7 @@ function editarUsuario($dados) {
     $statemente->bindParam(1, $dados['group_id'], PDO::PARAM_INT);
     $statemente->bindParam(2, $dados['name'], PDO::PARAM_STR);
     $statemente->bindParam(3, $dados['username'], PDO::PARAM_STR);
-    $statemente->bindParam(4, $dados['password'], PDO::PARAM_STR);
+    $statemente->bindParam(4, criptografar($dados['password']), PDO::PARAM_STR);
     $statemente->bindParam(5, $dados['email'], PDO::PARAM_STR);
     $statemente->bindParam(6, $dados['sex'], PDO::PARAM_STR);
     $statemente->bindParam(7, $dados['age'], PDO::PARAM_INT);
@@ -1280,10 +1280,15 @@ function getStatusContas() {
     return $dados;
 }
 
+function criptografar($string) {
+    return sha1($string);
+}
+
 function validaAcesso($user, $password) {
     $pdo = conectar();
     $dados_retorno = array();
-    $sql = "SELECT id, group_id, name FROM users WHERE username =? and password=?";
+    $password = criptografar($password);
+    $sql = "SELECT id, group_id, name FROM users WHERE username =? AND password=?";
     $statemente = $pdo->prepare($sql);
     $statemente->bindParam(1, $user, PDO::PARAM_STR);
     $statemente->bindParam(2, $password, PDO::PARAM_STR);
