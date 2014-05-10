@@ -463,7 +463,7 @@ function listarContasAtrasadas($dados) {
                             <input type="checkbox" id="seleciona_atrasada_' . $value['id'] . '" value="' . $value['id'] . '" class="seleciona_conta_atrasada">
                         </td>
                         <td>
-                            <input type="text" id="id_atrasada_' . $value['id'] . '" value="' . $value['id'] . '" size="6">
+                            <input type="text" id="id_atrasada_' . $value['id'] . '" value="' . $value['id'] . '" size="6" readonly>
                         </td>
                         <td>
                             <input type="text" id="title_atrasada_' . $value['id'] . '" value="' . $value['title'] . '">
