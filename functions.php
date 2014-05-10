@@ -88,9 +88,9 @@ function listarAnotacoes($dados) {
                 $cont++;
                 echo '<tr>';
                 echo '<td style="width:3%;">' . $value['id'] . ' </td>';
-                echo '<td style="width:60%;">' . $value['description'] . ' </td>';
+                echo '<td style="width:60%;"><pre>' . $value['description'] . ' </pre></td>';
                 echo '<td style="width:10%;">' . $value['date_note'] . ' </td>';
-                echo '<td style="width:15%;">'
+                echo '<td style="width:25%;">'
                 . '<input type="checkbox" class="lido" id_note="' . $value['id'] . '" ' . $checked . '> ' .
                 '<input type="button" class="editar_note" id_note="' . $value['id'] . '" value="editar">' .
                 '<input type="button" class="deletar_note" id_note="' . $value['id'] . '" value="deletar">' .
