@@ -155,6 +155,13 @@ function listarContas($dados) {
         if (isset($dados['user_expense_id']) && !empty($dados['user_expense_id'])) {
             $sql .= " AND  users.id = " . $dados['user_expense_id'];
         }
+        if(isset($dados['paga']) && !empty($dados['paga'])) {
+            if($dados['paga']==2) {
+                $sql .= " AND  expenses.payment = 1";
+            } else if($dados['paga'] == 3) {
+                $sql .= " AND  expenses.payment = 0";
+            }
+        }
     }
     if (isset($dados['order_by']) && !empty($dados['order_by'])) {
         $order_by = ' order by ' . $dados['order_by'];
@@ -1365,6 +1372,7 @@ $data_fim = '';
 $user_expense_id = '';
 $mes = '';
 $id_grupo = '';
+$paga='';
 if (!empty($_REQUEST)) {
     $dados = getDadosRequest($_REQUEST);
     $titulo = isset($dados['titulo']) ? $dados['titulo'] : '';
@@ -1375,5 +1383,6 @@ if (!empty($_REQUEST)) {
     $user_expense_id = isset($dados['user_expense_id']) ? $dados['user_expense_id'] : '';
     $mes = isset($dados['mes']) ? $dados['mes'] : '';
     $id_grupo = isset($dados['id_grupo']) ? $dados['id_grupo'] : '';
+    $paga = isset($dados['paga']) ? $dados['paga'] : 1;
 }
 ?>
