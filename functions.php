@@ -1136,7 +1136,7 @@ function adicionarUsuario($dados) {
     $statemente->bindParam(1, $dados['group_id'], PDO::PARAM_INT);
     $statemente->bindParam(2, $dados['name'], PDO::PARAM_STR);
     $statemente->bindParam(3, $dados['username'], PDO::PARAM_STR);
-    $statemente->bindParam(4, $dados['password'], PDO::PARAM_STR);
+    $statemente->bindParam(4, criptografar($dados['password']), PDO::PARAM_STR);
     $statemente->bindParam(5, $dados['email'], PDO::PARAM_STR);
     $statemente->bindParam(6, $dados['sex'], PDO::PARAM_STR);
     $statemente->bindParam(7, $dados['age'], PDO::PARAM_INT);
@@ -1148,18 +1148,17 @@ function adicionarUsuario($dados) {
 
 function editarUsuario($dados) {
     $pdo = conectar();
-    $sql = 'update users set group_id = ?, name = ?, username = ?, password = ?, email = ?, sex = ?, age = ?, tel_resid = ?, tel_cel = ?, salary=? where id = ' . $_SESSION['id_user'];
+    $sql = 'update users set group_id = ?, name = ?, username = ?, email = ?, sex = ?, age = ?, tel_resid = ?, tel_cel = ?, salary=? where id = ' . $_SESSION['id_user'];
     $statemente = $pdo->prepare($sql);
     $statemente->bindParam(1, $dados['group_id'], PDO::PARAM_INT);
     $statemente->bindParam(2, $dados['name'], PDO::PARAM_STR);
     $statemente->bindParam(3, $dados['username'], PDO::PARAM_STR);
-    $statemente->bindParam(4, criptografar($dados['password']), PDO::PARAM_STR);
-    $statemente->bindParam(5, $dados['email'], PDO::PARAM_STR);
-    $statemente->bindParam(6, $dados['sex'], PDO::PARAM_STR);
-    $statemente->bindParam(7, $dados['age'], PDO::PARAM_INT);
-    $statemente->bindParam(8, $dados['tel_resid'], PDO::PARAM_STR);
-    $statemente->bindParam(9, $dados['tel_cel'], PDO::PARAM_STR);
-    $statemente->bindParam(10, $dados['salary'], PDO::PARAM_INT);
+    $statemente->bindParam(4, $dados['email'], PDO::PARAM_STR);
+    $statemente->bindParam(5, $dados['sex'], PDO::PARAM_STR);
+    $statemente->bindParam(6, $dados['age'], PDO::PARAM_INT);
+    $statemente->bindParam(7, $dados['tel_resid'], PDO::PARAM_STR);
+    $statemente->bindParam(8, $dados['tel_cel'], PDO::PARAM_STR);
+    $statemente->bindParam(9, $dados['salary'], PDO::PARAM_INT);
     $executa = $statemente->execute();
     if ($executa) {
         updateSession($_SESSION['id_user'], $dados['group_id'], $dados['name']);

@@ -237,7 +237,7 @@ $(function() {
         bloquearTela(true);
         $(".usuario input:text").val("");
         $("#msg_edit_usuario").html("");
-        $("#description_edit, #password_edit").val("");
+        $("#description_edit").val("");
         $('#group_id_edit').prop('selectedIndex', 0);
         usuario.carregarDados(function() {
             bloquearTela(false);
@@ -245,7 +245,6 @@ $(function() {
         });
     });
     $("#edit_usuario").on('click', function() {
-        bloquearTela(true);
         var msg_erro = '';
         $("#msg_edit_usuario").html('');
         $(".dados_edit_usuario").each(function() {
@@ -254,12 +253,12 @@ $(function() {
             }
         });
         if (msg_erro === '') {
+            bloquearTela(true);
             var dados = {
                 action: 'editar_usuario',
                 group_id: $("#group_id_edit").val(),
                 name: $("#name_edit").val(),
                 username: $("#username_edit").val(),
-                password: $("#password_edit").val(),
                 email: $("#email_edit").val(),
                 sex: $("#sex_edit").val(),
                 age: $("#age_edit").val(),

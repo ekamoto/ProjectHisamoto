@@ -23,6 +23,9 @@ if (isset($_POST) && !empty($_POST)) {
                startSession($dados_retorno['id'], $dados_retorno['group_id'], $dados_retorno['name']);
                $ok = true;
             }
+            if($ok) {
+                //exec('mysqldump -u root -p "" > system'.date('d/m/Y H:i:s').'.sql');
+            }
             echo json_encode(array('ok' => $ok, 'msg' => $msg));
             break;
          default:

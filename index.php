@@ -3,6 +3,7 @@ session_start('acesso');
 if (isset($_SESSION['id_user'])) {
     session_destroy();
 }
+// exec('mysqldump -u root -p "" > system'.date('d/m/Y H:i:s').'.sql');
 ?>
 <!DOCTYPE html>
 <html>

@@ -331,7 +331,7 @@ usuario.carregarDados = function(callback) {
             Util.setSelectByValue("group_id_edit", ret.group_id);
             $("#name_edit").val(ret.name);
             $("#username_edit").val(ret.username);
-            $("#password_edit").val(ret.password);
+            //$("#password_edit").val(ret.password);
             $("#email_edit").val(ret.email);
             Util.setSelectByValue("sex_edit", ret.sex);
             $("#age_edit").val(ret.age);
