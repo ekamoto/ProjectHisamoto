@@ -104,7 +104,7 @@ include 'permission.php';
                     </td>
                     <td colspan="5">
                         <?php echo getUsuarios($user_expense_id); ?>&nbsp;&nbsp;
-                        <input type="radio" name="paga" value="1" <?php if($paga==1)echo 'checked';?> > Todas
+                        <input type="radio" name="paga" value="1" <?php if($paga==1 || $paga==='')echo 'checked';?> > Todas
                         <input type="radio" name="paga" value="2" <?php if($paga==2)echo 'checked';?>> Paga
                         <input type="radio" name="paga" value="3" <?php if($paga==3)echo 'checked';?>> Não Paga
                         <?php //echo $paga; ?>

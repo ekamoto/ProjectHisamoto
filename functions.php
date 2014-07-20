@@ -1348,7 +1348,7 @@ function getQtdAnotacoesNaoLidas() {
 function getAnotacoesNaoLidas() {
     $pdo = conectar();
     $dados = array();
-    $sql = "SELECT * FROM notes WHERE group_id = ? AND note_read =0";
+    $sql = "SELECT * FROM notes WHERE group_id = ? AND note_read =0 order by id desc";
     $statemente = $pdo->prepare($sql);
     $statemente->bindParam(1, $_SESSION['group_id'], PDO::PARAM_STR);
     $executa = $statemente->execute();
