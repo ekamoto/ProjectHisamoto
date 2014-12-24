@@ -23,6 +23,13 @@ function noteController() {
             sistema.fecharDialog(".ed_anotacao");
         });
     };
+    this.gerarGastoPadrao = function(data) {
+        
+         var descricao_anotacao = data.descricao_anotacao;
+          
+         descricao_anotacao += "\nContas:\nLe: \nPri: \nTotal: \n\nConta Sistema:  \nCarro mês seguinte: 538,72 \nGasolina: 240,00 \nCarne+Verdura:150+150 = 300,00";
+         $("#edit_descricao_anotacao").val(descricao_anotacao);
+    };
     this.getQtdAnotacoesNaoLidas = function(data) {
         this.noteDataService.getQtdAnotacoesNaoLidas({action: "getQtdAnotacoesNaoLidas"}, 
         function(json) {

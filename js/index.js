@@ -339,6 +339,12 @@ $(function() {
             id: $("#edit_id_note").val()
         });
     });
+    $("#gerar_gasto_padrao").on("click", function() {
+        noteController.gerarGastoPadrao({
+            action: "gerarGastoPadrao",
+            descricao_anotacao: $("#edit_descricao_anotacao").val()
+        });
+    });
     $("#salvar_anotacao").on("click", function() {        
         var msg_erro = '';
         $("#msg_cadastro_anotacao").html('');
