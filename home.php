@@ -34,12 +34,11 @@ include 'permission.php';
                 <li>
                     <a href="#">Cadastros</a>
                     <ul>
-                        <li class="add_usuario"><a href="#">Usu&aacute;rios</a></li>
                         <li class="add_empresa"><a href="#">Empresas</a></li>
                         <li id="id_cadastrar"><a href="#">Conta</a></li>
                         <li class="add_empresa"><a href="#">Empresa</a></li>
                         <?php if ($admin): ?>
-                            <li class="add_usuario"><a href="#">Usu&aacute;rio</a></li>
+                            <li class="add_usuario"><a href="#">Usu&aacute;rios</a></li>
                             <li class="add_grupo"><a href="#">Grupo</a></li>
                         <?php endif; ?>
                         <li class="add_note"><a href="#">Anota&ccedil;&otilde;es</a></li>
