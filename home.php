@@ -375,7 +375,9 @@ include 'permission.php';
                     <tr>
                         <td colspan="2" style="text-align: right;">
                             <input type="button" id="edit_anotacao" value="Editar"/>
+                            <?php if ($admin): ?>
                             <input type="button" id="gerar_gasto_padrao" value="Gerar gasto padrão"/>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <tr>
