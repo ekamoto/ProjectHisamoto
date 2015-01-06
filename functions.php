@@ -254,6 +254,40 @@ function listarContas($dados) {
 
                 $value['date'] = ajustaDataPort($value['date']);
                 $checked_pago = $value['payment'] ? 'checked' : '';
+
+
+                $textoparc = "";
+                $dataultimaparcela = "";
+                if ($value['type'] == 1) {
+
+                    $statemente2 = $pdo->prepare("select count(id) as cont from expenses where payment=1 and title='" . $value['title']."'");
+                    $executa = $statemente2->execute();
+
+                    $qtd_conta_paga = 0;
+                    if ($executa) {
+                        if ($statemente2) {
+                            foreach ($statemente2 as $value2) {
+                                $qtd_conta_paga = $value2['cont'];
+                            }
+                        }
+                    }
+
+                    $textoparc = "<i title='Quantidade de parcelas pagas' style='cursor: help;'>" .$qtd_conta_paga . " / </i>";
+
+                    $statemente2 = $pdo->prepare("select date from expenses where title='" . $value['title']."' order by date desc limit 1");
+                    $executa = $statemente2->execute();
+
+                    if ($executa) {
+                        if ($statemente2) {
+                            foreach ($statemente2 as $value2) {
+                                $dataultimaparcela = ajustaDataPort($value2['date']);
+                            }
+                        }
+                    }
+                    $dataultimaparcela = " <i title='Data da última parcela' style='cursor: help;'>[" . $dataultimaparcela."] </i>";
+
+                }
+                
                 echo '<tr id="linha_' . $value['id'] . '">
                         <td ' . $cor_linha . '>
                             <strong>' . $cont . '</strong>
@@ -265,12 +299,13 @@ function listarContas($dados) {
                             <input type="text" id="id_' . $value['id'] . '" value="' . $value['id'] . '" size="6" readonly >
                         </td>
                         <td>
-                            <input type="text" id="title_' . $value['id'] . '" value="' . $value['title'] . '">
+                            <input type="text" id="title_' . $value['id'] . '" value="' . $value['title'] . '" title="' . $value['description'] . '" style="cursor: help;">
                         </td>
                         <td>
                             ' . getSelectEmpresaList($value['enterprise_id'], $value['id']) . '
                         </td>
                         <td>
+                            ' . $textoparc . '
                             <input type="text" id="qtd_portion_' . $value['id'] . '" value="' . $value['qtd_portion'] . '" size="6" onKeyPress="return(SomenteNumero(event))" style="display:' . $display . ';">
                         </td>
                         <!--
@@ -285,7 +320,7 @@ function listarContas($dados) {
                             <input type="text" id="portion_value_' . $value['id'] . '" value="' . $value['portion_value'] . '" size="6" onKeyPress="return(FormataReais(this, ' . "'.'" . ', ' . "','" . ', event))" style="display:' . $display2 . ';">
                         </td>
                         <td>
-                            <input type="text" class="data" id="data_' . $value['id'] . '" value="' . $value['date'] . '" size="21">
+                            <input type="text" class="data" id="data_' . $value['id'] . '" value="' . $value['date'] . '" size="21">'.$dataultimaparcela.'
                         </td>
                         <td>
                             <!--<input type="text" id="pago_' . $value['id'] . '" value="' . $value['payment'] . '" size="2" onKeyPress="return(SomenteNumero(event))">-->
