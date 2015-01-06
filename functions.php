@@ -70,7 +70,7 @@ function listarAnotacoes($dados) {
                         <strong>Id</strong>
                     </th>
                     <th>
-                        <strong>Desci&ccedil;&atilde;o</strong>
+                        <strong>Descri&ccedil;&atilde;o</strong>
                     </th>
                     <th>
                         <strong>Data</strong>
