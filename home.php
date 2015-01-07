@@ -231,6 +231,9 @@ include 'permission.php';
                             <input type="text" id="expiration_day" name="expiration_day" class="dados_cad_conta" title="Dia do vencimento" size="5" onKeyPress="return(SomenteNumero(event))"/>
                             &nbsp;&nbsp;<strong>Pago:</strong>
                             <input type="checkbox" id="payment" name="payment" class="dados_cad_conta" />
+                            &nbsp;&nbsp;
+                            <input type="radio" name="modality" checked="checked" value="1" class="modality">&nbsp;Pagar
+                            <input type="radio" name="modality" value="2" class="modality">&nbsp;Receber
                         </td>
                     </tr>
                     <tr>

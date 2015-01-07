@@ -225,10 +225,18 @@ $(function() {
             if ($("#payment").is(":checked")) {
                 pago = 1;
             }
+            var modality = 1;
+            $("input:radio[name=modality]").each(function() {
+                //Verifica qual está selecionado
+                if ($(this).is(":checked"))
+                    modality = parseInt($(this).val());
+            });
+
             var dados = {
                 action: 'add_conta',
                 user_id: $("#user_id").val(),
                 type: $("#tipo_conta").val(),
+                modality: modality,
                 title: $("#title").val(),
                 total_value: $("#total_value").val(),
                 portion_value: limpaCampoFloat($("#portion_value").val()),

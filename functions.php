@@ -129,7 +129,7 @@ function listarContas($dados) {
             FROM    expenses expenses
             INNER JOIN users users ON (users.id = expenses.user_id) 
             INNER JOIN groups groups ON (groups.id = users.group_id)
-            WHERE   expenses.id IS NOT NULL AND users.group_id = ' . $_SESSION['group_id'];
+            WHERE   expenses.id IS NOT NULL AND users.group_id = ' . $_SESSION['group_id'] . " /*AND (expenses.modality != 2 OR expenses.modality IS NULL) */";
     if (!empty($dados)) {
         if (isset($dados['titulo'])) {
             $dados['titulo'] = trim($dados['titulo']);
@@ -224,16 +224,20 @@ function listarContas($dados) {
                     $qtd_contas_por_empresas[$value['enterprise_id']]['cont'] = $qtd_contas_por_empresas[$value['enterprise_id']]['cont'] + 1;
                 }
                 $qtd_contas_por_empresas[$value['enterprise_id']]['nome'] = getNomeEmpresa($value['enterprise_id']);
-                if ($value['type'] == 1 && $value['payment'] != 1) {
-                    $total += $value['portion_value'];
-                } else if ($value['payment'] != 1) {
-                    $total += $value['total_value'];
+
+                if($value['modality']!=2) {
+                    if ($value['type'] == 1 && $value['payment'] != 1) {
+                        $total += $value['portion_value'];
+                    } else if ($value['payment'] != 1) {
+                        $total += $value['total_value'];
+                    }
+                    if ($value['type'] == 1) {
+                        $total_geral += $value['portion_value'];
+                    } else {
+                        $total_geral += $value['total_value'];
+                    }    
                 }
-                if ($value['type'] == 1) {
-                    $total_geral += $value['portion_value'];
-                } else {
-                    $total_geral += $value['total_value'];
-                }
+                
                 $value['portion_value'] = str_replace('.', ',', $value['portion_value']);
                 $value['total_value'] = str_replace('.', ',', $value['total_value']);
                 $botao_editar = "<input type='button' value='Editar' class='editar_conta' id_conta='" . $value['id'] . "' style='display:inline;' title='Editar: " . $value['title'] . "' />";
@@ -256,11 +260,12 @@ function listarContas($dados) {
                 $value['date'] = ajustaDataPort($value['date']);
                 $checked_pago = $value['payment'] ? 'checked' : '';
 
-
                 $textoparc = "";
                 $dataultimaparcela = "";
+                $curs = '';
                 if ($value['type'] == 1) {
 
+                    $curs = 'style="cursor: help;"';
                     $statemente2 = $pdo->prepare("select count(id) as cont from expenses where payment=1 and title='" . $value['title']."'");
                     $executa = $statemente2->execute();
 
@@ -288,10 +293,17 @@ function listarContas($dados) {
                     $dataultimaparcela = 'Data da última parcela: ' . $dataultimaparcela . '';
 
                 }
+
+                $contaux = $cont;
+                if($value['modality']==2) {
+                    $contaux = $cont . 'R';
+                } else {
+                    $contaux = $cont . 'P';
+                }
                 
                 echo '<tr id="linha_' . $value['id'] . '">
                         <td ' . $cor_linha . '>
-                            <strong>' . $cont . '</strong>
+                            <strong>' . $contaux . '</strong>
                         </td>
                         <td>
                             <input type="checkbox" id="seleciona_' . $value['id'] . '" value="' . $value['id'] . '" class="seleciona_conta">
@@ -320,7 +332,7 @@ function listarContas($dados) {
                             <input type="text" id="portion_value_' . $value['id'] . '" value="' . $value['portion_value'] . '" size="6" onKeyPress="return(FormataReais(this, ' . "'.'" . ', ' . "','" . ', event))" style="display:' . $display2 . ';">
                         </td>
                         <td>
-                            <input type="text" class="data" id="data_' . $value['id'] . '" value="' . $value['date'] . '" size="21" style="cursor: help;" title="'.$dataultimaparcela.'">
+                            <input type="text" class="data" id="data_' . $value['id'] . '" value="' . $value['date'] . '" size="21" ' . $curs . ' title="'.$dataultimaparcela.'">
                         </td>
                         <td>
                             <!--<input type="text" id="pago_' . $value['id'] . '" value="' . $value['payment'] . '" size="2" onKeyPress="return(SomenteNumero(event))">-->
@@ -394,7 +406,7 @@ function listarContasAtrasadas($dados) {
             INNER JOIN users users ON (users.id = expenses.user_id) 
             INNER JOIN groups groups ON (groups.id = users.group_id)
             WHERE users.group_id = ' . $_SESSION['group_id'] .
-            ' AND expenses.date < "' . date('Y-m-d') . '" AND expenses.payment = 0';
+            ' AND expenses.date < "' . date('Y-m-d') . '" AND expenses.payment = 0 /*AND (expenses.modality != 2 OR expenses.modality IS NULL) */';
     if (!empty($dados)) {
         if (isset($dados['titulo'])) {
             $dados['titulo'] = trim($dados['titulo']);
@@ -474,10 +486,12 @@ function listarContasAtrasadas($dados) {
             $total = 0;
             $total_geral = 0;
             foreach ($statemente as $value) {
-                if ($value['type'] == 1) {
-                    $total += $value['portion_value'];
-                } else {
-                    $total += $value['total_value'];
+                if($value['modality']!=2) {
+                    if ($value['type'] == 1) {
+                        $total += $value['portion_value'];
+                    } else {
+                        $total += $value['total_value'];
+                    }
                 }
                 $value['portion_value'] = str_replace('.', ',', $value['portion_value']);
                 $value['total_value'] = str_replace('.', ',', $value['total_value']);
@@ -500,8 +514,11 @@ function listarContasAtrasadas($dados) {
                 }
 
                 $textoparc = "";
+                $curs = '';
                 $dataultimaparcela = "";
                 if ($value['type'] == 1) {
+
+                    $curs = 'style="cursor: help;"';
 
                     $statemente2 = $pdo->prepare("select count(id) as cont from expenses where payment=1 and title='" . $value['title']."'");
                     $executa = $statemente2->execute();
@@ -531,9 +548,16 @@ function listarContasAtrasadas($dados) {
 
                 }
 
+                $contaux = $cont;
+                if($value['modality']==2) {
+                    $contaux = $cont . 'R';
+                } else {
+                    $contaux = $cont . 'P';
+                }
+
                 echo '<tr id="linha_' . $value['id'] . '_atrasada">
                         <td ' . $cor_linha . '>
-                            <strong>' . $cont . '</strong>
+                            <strong>' . $contaux . '</strong>
                         </td>
                         <td>
                             <input type="checkbox" id="seleciona_atrasada_' . $value['id'] . '" value="' . $value['id'] . '" class="seleciona_conta_atrasada">
@@ -562,7 +586,7 @@ function listarContasAtrasadas($dados) {
                             <input type="text" id="portion_value_atrasada_' . $value['id'] . '" value="' . $value['portion_value'] . '" size="6" onKeyPress="return(FormataReais(this, ' . "'.'" . ', ' . "','" . ', event))" style="display:' . $display2 . ';">
                         </td>
                         <td>
-                            <input type="text" class="data" id="data_atrasada_' . $value['id'] . '" value="' . $value['date'] . '" size="21" title="'.$dataultimaparcela.'" style="cursor: help;">
+                            <input type="text" class="data" id="data_atrasada_' . $value['id'] . '" value="' . $value['date'] . '" size="21" title="'.$dataultimaparcela.'" ' . $curs . ' >
                         </td>
                         <td>
                             <!--<input type="text" id="pago_atrasada_' . $value['id'] . '" value="' . $value['payment'] . '" size="2" onKeyPress="return(SomenteNumero(event))">-->
@@ -949,13 +973,15 @@ function adicionarContaNormal($dados) {
                                     portion_value,
                                     description,
                                     type,
+                                    modality,
                                     user_id,
                                     expiration_day,
                                     enterprise_id) 
                                     values
-                                  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+                                  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
     $statemente = $pdo->prepare($sql);
     $dados['qtd_portion_payment'] = (int) $dados['qtd_portion_payment'];
+    $dados['modality'] = (int) $dados['modality'];
     $dados['total_value'] = (float) $dados['total_value'];
     $dados['payment'] = (int) $dados['payment'];
     $statemente->bindParam(1, $dados['title'], PDO::PARAM_STR);
@@ -967,9 +993,10 @@ function adicionarContaNormal($dados) {
     $statemente->bindParam(7, $dados['portion_value'], PDO::PARAM_INT);
     $statemente->bindParam(8, $dados['description'], PDO::PARAM_STR);
     $statemente->bindParam(9, $dados['type'], PDO::PARAM_INT);
-    $statemente->bindParam(10, $dados['user_id'], PDO::PARAM_INT);
-    $statemente->bindParam(11, $dados['expiration_day'], PDO::PARAM_INT);
-    $statemente->bindParam(12, $dados['enterprise_id'], PDO::PARAM_INT);
+    $statemente->bindParam(10, $dados['modality'], PDO::PARAM_INT);
+    $statemente->bindParam(11, $dados['user_id'], PDO::PARAM_INT);
+    $statemente->bindParam(12, $dados['expiration_day'], PDO::PARAM_INT);
+    $statemente->bindParam(13, $dados['enterprise_id'], PDO::PARAM_INT);
     $executa = $statemente->execute();
     if ($executa) {
         return true;
@@ -1013,14 +1040,16 @@ function adicionarContaParcelada($dados) {
                                         portion_value,
                                         description,
                                         type,
+                                        modality,
                                         user_id,
                                         expiration_day,
                                         enterprise_id) 
                                         values
-                                  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+                                  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $statemente = $pdo->prepare($sql);
         $dados['qtd_portion_payment'] = (int) $dados['qtd_portion_payment'];
         $dados['payment'] = (int) $dados['payment'];
+        $dados['modality'] = (int) $dados['modality'];
         $statemente->bindParam(1, $dados['title'], PDO::PARAM_STR);
         $statemente->bindParam(2, $dados['qtd_portion'], PDO::PARAM_INT);
         $statemente->bindParam(3, $dados['qtd_portion_payment'], PDO::PARAM_INT);
@@ -1030,9 +1059,10 @@ function adicionarContaParcelada($dados) {
         $statemente->bindParam(7, $dados['portion_value'], PDO::PARAM_INT);
         $statemente->bindParam(8, $dados['description'], PDO::PARAM_STR);
         $statemente->bindParam(9, $dados['type'], PDO::PARAM_INT);
-        $statemente->bindParam(10, $dados['user_id'], PDO::PARAM_INT);
-        $statemente->bindParam(11, $dados['expiration_day'], PDO::PARAM_INT);
-        $statemente->bindParam(12, $dados['enterprise_id'], PDO::PARAM_INT);
+        $statemente->bindParam(10, $dados['modality'], PDO::PARAM_INT);
+        $statemente->bindParam(11, $dados['user_id'], PDO::PARAM_INT);
+        $statemente->bindParam(12, $dados['expiration_day'], PDO::PARAM_INT);
+        $statemente->bindParam(13, $dados['enterprise_id'], PDO::PARAM_INT);
         $executa = $statemente->execute();
 //      $eero = $statemente->errorInfo();
 //      print_r($eero);
@@ -1064,15 +1094,17 @@ function adicionarContaFixa($dados) {
                                         portion_value,
                                         description,
                                         type,
+                                        modality,
                                         user_id,
                                         expiration_day,
                                         enterprise_id) 
                                         values
-                                  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+                                  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $statemente = $pdo->prepare($sql);
         $dados['qtd_portion_payment'] = (int) $dados['qtd_portion_payment'];
         $dados['total_value'] = (float) $dados['total_value'];
         $dados['payment'] = (int) $dados['payment'];
+        $dados['modality'] = (int) $dados['modality'];
         $statemente->bindParam(1, $dados['title'], PDO::PARAM_STR);
         $statemente->bindParam(2, $dados['qtd_portion'], PDO::PARAM_INT);
         $statemente->bindParam(3, $dados['qtd_portion_payment'], PDO::PARAM_INT);
@@ -1082,9 +1114,10 @@ function adicionarContaFixa($dados) {
         $statemente->bindParam(7, $dados['portion_value'], PDO::PARAM_INT);
         $statemente->bindParam(8, $dados['description'], PDO::PARAM_STR);
         $statemente->bindParam(9, $dados['type'], PDO::PARAM_INT);
-        $statemente->bindParam(10, $dados['user_id'], PDO::PARAM_INT);
-        $statemente->bindParam(11, $dados['expiration_day'], PDO::PARAM_INT);
-        $statemente->bindParam(12, $dados['enterprise_id'], PDO::PARAM_INT);
+        $statemente->bindParam(10, $dados['modality'], PDO::PARAM_INT);
+        $statemente->bindParam(11, $dados['user_id'], PDO::PARAM_INT);
+        $statemente->bindParam(12, $dados['expiration_day'], PDO::PARAM_INT);
+        $statemente->bindParam(13, $dados['enterprise_id'], PDO::PARAM_INT);
         $executa = $statemente->execute();
         if (!$executa) {
             return false;
