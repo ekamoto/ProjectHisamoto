@@ -56,6 +56,28 @@ $(function() {
             });
         }
     });
+    $(".pagar_tudo").on("click", function() {
+        if ($(this).is(":checked")) {
+            $(".conta_paga").each(function() {
+                this.checked = true;
+            });
+        } else {
+            $(".conta_paga").each(function() {
+                this.checked = false;
+            });
+        }
+    });
+    $(".pagar_tudo_conta_atrasasa").on("click", function() {
+        if ($(this).is(":checked")) {
+            $(".conta_paga_atrasada").each(function() {
+                this.checked = true;
+            });
+        } else {
+            $(".conta_paga_atrasada").each(function() {
+                this.checked = false;
+            });
+        }
+    });
     $("#seleciona_todos_contas_atrasadas").on('click', function() {
         if ($(this).is(":checked")) {
             $(".seleciona_conta_atrasada").each(function() {
