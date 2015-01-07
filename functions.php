@@ -207,6 +207,7 @@ function listarContas($dados) {
                     </th>
                     <th>
                         <strong>Pago</strong>
+                        <input type="checkbox" class="pagar_tudo">
                     </th>
                     <th>
                         <input type="button" id="editar_todos" value="Ed.Todas" style="display:inline;" title="Editar todas as contas selecionadas"><input type="button" id="deletar_todos" value="Del.Todas" style="display:inline;" title="Deletar todas as contas selecionadas">
@@ -272,7 +273,7 @@ function listarContas($dados) {
                         }
                     }
 
-                    $textoparc = "<i title='Quantidade de parcelas pagas' style='cursor: help;'>" .$qtd_conta_paga . " / </i>";
+                    $textoparc = 'Parcelas pagas: ' . $qtd_conta_paga;
 
                     $statemente2 = $pdo->prepare("select date from expenses where title='" . $value['title']."' order by date desc limit 1");
                     $executa = $statemente2->execute();
@@ -284,7 +285,7 @@ function listarContas($dados) {
                             }
                         }
                     }
-                    $dataultimaparcela = " <i title='Data da última parcela' style='cursor: help;'>[" . $dataultimaparcela."] </i>";
+                    $dataultimaparcela = 'Data da última parcela: ' . $dataultimaparcela . '';
 
                 }
                 
@@ -305,8 +306,7 @@ function listarContas($dados) {
                             ' . getSelectEmpresaList($value['enterprise_id'], $value['id']) . '
                         </td>
                         <td>
-                            ' . $textoparc . '
-                            <input type="text" id="qtd_portion_' . $value['id'] . '" value="' . $value['qtd_portion'] . '" size="6" onKeyPress="return(SomenteNumero(event))" style="display:' . $display . ';">
+                            <input type="text" id="qtd_portion_' . $value['id'] . '" value="' . $value['qtd_portion'] . '" size="6" onKeyPress="return(SomenteNumero(event))" style="display:' . $display . '; cursor: help;" title="'.$textoparc.'">
                         </td>
                         <!--
                         <td>
@@ -320,11 +320,11 @@ function listarContas($dados) {
                             <input type="text" id="portion_value_' . $value['id'] . '" value="' . $value['portion_value'] . '" size="6" onKeyPress="return(FormataReais(this, ' . "'.'" . ', ' . "','" . ', event))" style="display:' . $display2 . ';">
                         </td>
                         <td>
-                            <input type="text" class="data" id="data_' . $value['id'] . '" value="' . $value['date'] . '" size="21">'.$dataultimaparcela.'
+                            <input type="text" class="data" id="data_' . $value['id'] . '" value="' . $value['date'] . '" size="21" style="cursor: help;" title="'.$dataultimaparcela.'">
                         </td>
                         <td>
                             <!--<input type="text" id="pago_' . $value['id'] . '" value="' . $value['payment'] . '" size="2" onKeyPress="return(SomenteNumero(event))">-->
-                            <input type="checkbox" id="pago_' . $value['id'] . '" ' . $checked_pago . '>
+                            <input type="checkbox" id="pago_' . $value['id'] . '" ' . $checked_pago . ' class="conta_paga">
                         </td>
                         <td>
                             ' . $botao_editar . $botao_deletar . '
@@ -464,6 +464,7 @@ function listarContasAtrasadas($dados) {
                     </th>
                     <th>
                         <strong>Pago</strong>
+                        <input type="checkbox" class="pagar_tudo_conta_atrasasa">
                     </th>
                     <th>
                         <input type="button" id="editar_todos_conta_atrasada" value="Ed.Todas" style="display:inline;" title="Editar todas as contas selecionadas"><input type="button" id="deletar_todos_conta_atrasada" value="Del.Todas" style="display:inline;" title="Deletar todas as contas selecionadas">
@@ -497,6 +498,39 @@ function listarContasAtrasadas($dados) {
                     $display = $display2 = 'none';
                     $cor_linha = " style='background-color:#ADD8E6' ";
                 }
+
+                $textoparc = "";
+                $dataultimaparcela = "";
+                if ($value['type'] == 1) {
+
+                    $statemente2 = $pdo->prepare("select count(id) as cont from expenses where payment=1 and title='" . $value['title']."'");
+                    $executa = $statemente2->execute();
+
+                    $qtd_conta_paga = 0;
+                    if ($executa) {
+                        if ($statemente2) {
+                            foreach ($statemente2 as $value2) {
+                                $qtd_conta_paga = $value2['cont'];
+                            }
+                        }
+                    }
+
+                    $textoparc = 'Parcelas pagas: ' . $qtd_conta_paga;
+
+                    $statemente2 = $pdo->prepare("select date from expenses where title='" . $value['title']."' order by date desc limit 1");
+                    $executa = $statemente2->execute();
+
+                    if ($executa) {
+                        if ($statemente2) {
+                            foreach ($statemente2 as $value2) {
+                                $dataultimaparcela = ajustaDataPort($value2['date']);
+                            }
+                        }
+                    }
+                    $dataultimaparcela = 'Data da última parcela: ' . $dataultimaparcela . '';
+
+                }
+
                 echo '<tr id="linha_' . $value['id'] . '_atrasada">
                         <td ' . $cor_linha . '>
                             <strong>' . $cont . '</strong>
@@ -508,13 +542,13 @@ function listarContasAtrasadas($dados) {
                             <input type="text" id="id_atrasada_' . $value['id'] . '" value="' . $value['id'] . '" size="6" readonly>
                         </td>
                         <td>
-                            <input type="text" id="title_atrasada_' . $value['id'] . '" value="' . $value['title'] . '">
+                            <input type="text" id="title_atrasada_' . $value['id'] . '" value="' . $value['title'] . '" title="' . $value['description'] . '" style="cursor: help;">
                         </td>
                         <td>
                             ' . getSelectEmpresaListContaAtrasada($value['enterprise_id'], $value['id']) . '
                         </td>
                         <td>
-                            <input type="text" id="qtd_portion_atrasada_' . $value['id'] . '" value="' . $value['qtd_portion'] . '" size="6" onKeyPress="return(SomenteNumero(event))" style="display:' . $display . ';">
+                            <input type="text" id="qtd_portion_atrasada_' . $value['id'] . '" value="' . $value['qtd_portion'] . '" size="6" onKeyPress="return(SomenteNumero(event))" style="display:' . $display . '; cursor: help;" title="'.$textoparc.'">
                         </td>
                         <!--
                         <td>
@@ -528,11 +562,11 @@ function listarContasAtrasadas($dados) {
                             <input type="text" id="portion_value_atrasada_' . $value['id'] . '" value="' . $value['portion_value'] . '" size="6" onKeyPress="return(FormataReais(this, ' . "'.'" . ', ' . "','" . ', event))" style="display:' . $display2 . ';">
                         </td>
                         <td>
-                            <input type="text" class="data" id="data_atrasada_' . $value['id'] . '" value="' . $value['date'] . '" size="21">
+                            <input type="text" class="data" id="data_atrasada_' . $value['id'] . '" value="' . $value['date'] . '" size="21" title="'.$dataultimaparcela.'" style="cursor: help;">
                         </td>
                         <td>
                             <!--<input type="text" id="pago_atrasada_' . $value['id'] . '" value="' . $value['payment'] . '" size="2" onKeyPress="return(SomenteNumero(event))">-->
-                            <input type="checkbox" id="pago_atrasada_' . $value['id'] . '" ' . $checked_pago . '>
+                            <input type="checkbox" id="pago_atrasada_' . $value['id'] . '" ' . $checked_pago . ' class="conta_paga_atrasada">
                         </td>
                         <td>
                             ' . $botao_editar . $botao_deletar . '
