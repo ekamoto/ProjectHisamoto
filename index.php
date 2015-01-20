@@ -44,7 +44,7 @@ if (isset($_SESSION['id_user'])) {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">HisamotoSystem</a>
+          <a class="navbar-brand" href="https://leandroekamoto.wordpress.com/leandro-shindi-ekamoto/" target="blanck">HisamotoSystem</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 
@@ -71,8 +71,10 @@ if (isset($_SESSION['id_user'])) {
         <h1>Gerenciador Financeiro</h1>
         <p>Organize suas contas, planeje antes de efetuar uma compra, tenha o controle total das suas financas.<br>
         Através do Gerenciador você saberá exatamente o valor de suas despesas por período e poderá controllar quais contas foram pagas e as que ainda estão em aberto. O gerenciador conta com gráficos que te auxiliam a avaliar o seu comportamento financeiro, possibilitando uma tomada de decisão antecipada para reduzir ou até evitar prejuizos</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Leia mais &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Leia mais &raquo;</a>
+            </p>
         <img src="img/sistema.png" style="width: 1000px; height: 500px;"/>
+        <p><a class="btn btn-success btn-lg" href="#" role="button" id="solicitarConta">Solicite uma conta &raquo;</a></p>
       </div>
     </div>
 
