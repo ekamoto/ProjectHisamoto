@@ -3,6 +3,11 @@ session_start('acesso');
 if (!isset($_SESSION['id_user'])) {
     die('Acesso Negado!');
 }
+
+if($_SESSION['device']!=='Desktop') {
+    header("location:home_mobile.php");
+}
+
 include 'functions.php';
 include 'permission.php';
 ?>

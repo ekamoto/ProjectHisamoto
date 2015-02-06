@@ -7,10 +7,29 @@ if (!isset($_SESSION['id_user'])) {
 }
 
 function startSession($id_user, $group_id, $name) {
+    
+    $iphone = strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");
+    $ipad = strpos($_SERVER['HTTP_USER_AGENT'],"iPad");
+    $android = strpos($_SERVER['HTTP_USER_AGENT'],"Android");
+
+    $device = 'Desktop';
+    if((int)$iphone) {
+        $device = 'Iphone';
+    }
+
+    if((int)$ipad) {
+        $device = 'Ipad';
+    }
+
+    if((int)$android) {
+        $device = 'Android';
+    }
+    
     if (!isset($_SESSION['id_user'])) {
         $_SESSION['id_user'] = $id_user;
         $_SESSION['group_id'] = $group_id;
         $_SESSION['name'] = $name;
+        $_SESSION['device'] = $device;
     } else {
         die('Falha ao iniciar sessão!');
     }

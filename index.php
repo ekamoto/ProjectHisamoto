@@ -3,6 +3,7 @@ session_start('acesso');
 if (isset($_SESSION['id_user'])) {
     session_destroy();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
