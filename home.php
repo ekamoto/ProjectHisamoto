@@ -19,7 +19,7 @@ include 'permission.php';
         <script type="text/javascript" src="js/lib/jquery-1.9.1pp.js"></script>
         <link href="css/home.css" rel="stylesheet">
         <link href="js/lib/jquery-ui-1.10.3/themes/base/jquery.ui.dialog.css" rel="stylesheet">
-        <link href="js/lib/jquery-ui-1.10.3/themes/smoothness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+        <link href="js/lib/jquery-ui-1.10.3/themes/smoothness/jquerycustom.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
         <link href="css/abas.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
