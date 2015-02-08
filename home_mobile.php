@@ -5,7 +5,7 @@ if (!isset($_SESSION['id_user'])) {
     die('Acesso Negado!');
 }
 
-if($_SESSION['device']!=='Desktop') {
+if(isset($_SESSION['device']) && $_SESSION['device']!=='Desktop') {
 	
 ?>
 <!DOCTYPE html>
@@ -85,4 +85,6 @@ if($_SESSION['device']!=='Desktop') {
   </body>
 </html>
 <?php
+} else {
+    die('Opss');
 }
