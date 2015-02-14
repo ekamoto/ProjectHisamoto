@@ -1019,6 +1019,12 @@ function addMes($data) {
         } else {
             $vet[1] ++;
         }
+        $num = cal_days_in_month(CAL_GREGORIAN, $vet[1], $vet[0]);
+        
+        if($vet[2] > $num) {
+           $vet[2] =  $num;
+        }
+        
 //      $dt_retorno = $vet[0] . '-' . $vet[1] . '-' . $vet[2] . ' ' . date('H:i:s'); Não preciso da hora
         $dt_retorno = $vet[0] . '-' . $vet[1] . '-' . $vet[2];
     }
@@ -1030,7 +1036,17 @@ function adicionarContaParcelada($dados) {
     if (isset($dados['date']) && !empty($dados['date'])) {
         $dados['date'] = ajustaData($dados['date']);
     }
+    
+    $mes = "";
+    $ano = "";
+    $data = "";
+    
     for ($i = 1; $i <= $dados['qtd_portion']; $i++) {
+        
+        if(empty($data)) {
+            $data = trim($dados['date']);
+        }
+        
         $sql = 'insert into expenses (  title, 
                                         qtd_portion, 
                                         qtd_portion_payment, 
@@ -1054,7 +1070,7 @@ function adicionarContaParcelada($dados) {
         $statemente->bindParam(2, $dados['qtd_portion'], PDO::PARAM_INT);
         $statemente->bindParam(3, $dados['qtd_portion_payment'], PDO::PARAM_INT);
         $statemente->bindParam(4, $dados['total_value'], PDO::PARAM_INT);
-        $statemente->bindParam(5, $dados['date'], PDO::PARAM_STR);
+        $statemente->bindParam(5, $data, PDO::PARAM_STR);
         $statemente->bindParam(6, $dados['payment'], PDO::PARAM_INT);
         $statemente->bindParam(7, $dados['portion_value'], PDO::PARAM_INT);
         $statemente->bindParam(8, $dados['description'], PDO::PARAM_STR);
@@ -1064,13 +1080,44 @@ function adicionarContaParcelada($dados) {
         $statemente->bindParam(12, $dados['expiration_day'], PDO::PARAM_INT);
         $statemente->bindParam(13, $dados['enterprise_id'], PDO::PARAM_INT);
         $executa = $statemente->execute();
-//      $eero = $statemente->errorInfo();
-//      print_r($eero);
-//      die;
-        if (!$executa) {
-            break;
+        
+        $vet = array();
+        $data = trim($dados['date']);
+        $vet = explode('-', $data);
+        
+        if(empty($mes)) {
+            $mes = $vet[1]+1; 
+        } else {
+            $mes++;
         }
-        $dados['date'] = addMes($dados['date']);
+        
+        if(empty($ano)) {
+            $ano = $vet[0];
+        } else if($mes==13) {
+            $ano++;
+            $mes = 1;
+        }
+        
+        $mes = (int)$mes;
+        if($mes<10){
+           $mes = (int)"0" . $mes; 
+        }
+        
+        $num = cal_days_in_month(CAL_GREGORIAN, (int)$mes, (int)$ano);
+        
+        
+        if($vet[2] > $num) {
+           $vet[2] =  $num;
+        }
+        
+        if($vet[2]<10){
+           $vet[2] = (int)"0" . $vet[2]; 
+        }
+        
+        
+        
+//      $dt_retorno = $vet[0] . '-' . $vet[1] . '-' . $vet[2] . ' ' . date('H:i:s'); Não preciso da hora
+        $data = $ano . '-' . $mes . '-' . $vet[2];
     }
     $pdo = NULL;
     return $executa;
@@ -1082,9 +1129,13 @@ function adicionarContaFixa($dados) {
     if (isset($dados['date']) && !empty($dados['date'])) {
         $dados['date'] = ajustaData($dados['date']);
     }
-    
+    $mes = "";
+    $ano = "";
+    $data = "";
     for ($i = 1; $i <= $conf_contas['qtd_meses_conta_fixa']; $i++) {
-        
+        if(empty($data)) {
+            $data = trim($dados['date']);
+        }
         $sql = 'insert into expenses (  title, 
                                         qtd_portion, 
                                         qtd_portion_payment, 
@@ -1109,7 +1160,7 @@ function adicionarContaFixa($dados) {
         $statemente->bindParam(2, $dados['qtd_portion'], PDO::PARAM_INT);
         $statemente->bindParam(3, $dados['qtd_portion_payment'], PDO::PARAM_INT);
         $statemente->bindParam(4, $dados['total_value'], PDO::PARAM_INT);
-        $statemente->bindParam(5, $dados['date'], PDO::PARAM_STR);
+        $statemente->bindParam(5, $data, PDO::PARAM_STR);
         $statemente->bindParam(6, $dados['payment'], PDO::PARAM_INT);
         $statemente->bindParam(7, $dados['portion_value'], PDO::PARAM_INT);
         $statemente->bindParam(8, $dados['description'], PDO::PARAM_STR);
@@ -1122,7 +1173,46 @@ function adicionarContaFixa($dados) {
         if (!$executa) {
             return false;
         }
-        $dados['date'] = addMes($dados['date']);
+        
+        $vet = array();
+        $data = trim($dados['date']);
+        $vet = explode('-', $data);
+        
+        if(empty($mes)) {
+            $mes = $vet[1]+1; 
+        } else {
+            $mes++;
+        }
+        
+        if(empty($ano)) {
+            $ano = $vet[0];
+        } else if($mes==13) {
+            $ano++;
+            $mes = 1;
+        }
+        
+        $mes = (int)$mes;
+        if($mes<10){
+           $mes = (int)"0" . $mes; 
+        }
+        
+        $num = cal_days_in_month(CAL_GREGORIAN, (int)$mes, (int)$ano);
+        
+        
+        if($vet[2] > $num) {
+           $vet[2] =  $num;
+        }
+        
+        if($vet[2]<10){
+           $vet[2] = (int)"0" . $vet[2]; 
+        }
+        
+        
+        
+//      $dt_retorno = $vet[0] . '-' . $vet[1] . '-' . $vet[2] . ' ' . date('H:i:s'); Não preciso da hora
+        $data = $ano . '-' . $mes . '-' . $vet[2];
+        //echo $data;
+        //die;
     }
     return $executa;
 }
