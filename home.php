@@ -514,16 +514,14 @@ include 'permission.php';
                             <input type="text" id="username_edit" name="username_edit" class="dados_edit_usuario"/>
                         </td>
                     </tr>
-                    <!--
                     <tr>
                         <td>
                             <strong>Senha:</strong>
                         </td>
                         <td>
-                            <input type="password" id="password_edit" name="password_edit" class="dados_edit_usuario"/>
+                            <input type="password" id="password_edit" name="password_edit"/>
                         </td>
                     </tr>
-                    -->
                     <tr>
                         <td>
                             <strong>Email:</strong>

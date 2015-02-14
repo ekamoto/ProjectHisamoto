@@ -287,6 +287,7 @@ $(function() {
             var dados = {
                 action: 'editar_usuario',
                 group_id: $("#group_id_edit").val(),
+                password_edit: $.trim($("#password_edit").val()),
                 name: $("#name_edit").val(),
                 username: $("#username_edit").val(),
                 email: $("#email_edit").val(),
