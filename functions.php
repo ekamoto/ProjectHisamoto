@@ -1236,6 +1236,7 @@ function getQuantidadeConta($ano, $mes, $tipo) {
             WHERE   date_format(expenses.date, '%m')=? 
             AND     date_format(expenses.date, '%Y')=? 
             AND     expenses.type=?
+            AND     (modality=1 or modality is null)
             AND     users.group_id = " . $_SESSION['group_id'];
     $statemente = $pdo->prepare($sql);
     $statemente->bindParam(1, $mes, PDO::PARAM_STR);
@@ -1260,6 +1261,7 @@ function getValorTotalMes($ano, $mes) {
             INNER JOIN users users on (users.id = expenses.user_id)
             WHERE date_format(expenses.date, '%m')=? 
             AND date_format(expenses.date, '%Y')=? 
+            AND     (modality=1 or modality is null)
             AND users.group_id=" . $_SESSION['group_id'];
     $statemente = $pdo->prepare($sql);
     $statemente->bindParam(1, $mes, PDO::PARAM_STR);
@@ -1288,6 +1290,7 @@ function getValorTotalMesContasAtrasadas($ano, $mes) {
             INNER JOIN users users on (users.id = expenses.user_id)
             WHERE date_format(expenses.date, '%m')=? 
             AND date_format(expenses.date, '%Y')=? 
+            AND (modality=1 or modality is null)
             AND users.group_id=" . $_SESSION['group_id'] .
             ' AND expenses.date < "' . date('Y-m-d') . '" AND expenses.payment = 0';
     $statemente = $pdo->prepare($sql);
