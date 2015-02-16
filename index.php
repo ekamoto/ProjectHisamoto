@@ -71,7 +71,7 @@ if (isset($_SESSION['id_user'])) {
       <div class="container">
         <h1>Gerenciador Financeiro</h1>
         <p>Organize suas contas, planeje antes de efetuar uma compra, tenha o controle total das suas financas.<br>
-        Através do Gerenciador você saberá exatamente o valor de suas despesas por período e poderá controllar quais contas foram pagas e as que ainda estão em aberto. O gerenciador conta com gráficos que te auxiliam a avaliar o seu comportamento financeiro, possibilitando uma tomada de decisão antecipada para reduzir ou até evitar prejuizos</p>
+        Através do Gerenciador você saberá exatamente o valor de suas despesas por período e poderá controlar quais contas foram pagas e as que ainda estão em aberto. O gerenciador conta com gráficos que te auxiliam a avaliar o seu comportamento financeiro, possibilitando uma tomada de decisão antecipada para reduzir ou até evitar prejuizos</p>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Leia mais &raquo;</a>
             </p>
         <img src="img/sistema.png" style="width: 1000px; height: 500px;"/>
