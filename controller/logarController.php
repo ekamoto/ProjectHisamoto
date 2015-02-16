@@ -46,6 +46,17 @@ function conectar() {
     return $pdo;
 }
 
+function conectarAdmin() {
+    global $dados_bd_admin;
+    try {
+        $pdo = new PDO('mysql:host=' . $dados_bd_admin['host'] . ';dbname=' . $dados_bd_admin['dbname'] . ';', $dados_bd_admin['user'], $dados_bd_admin['senha']);
+    } catch (PDOException $e) {
+        echo 'Falha ao conectar no banco de dados: ' . $e->getMessage();
+        die;
+    }
+    return $pdo;
+}
+
 function getDadosRequest($req) {
     $dados = array();
     if (isset($req) && !empty($req)) {
@@ -61,7 +72,13 @@ function criptografar($string) {
 }
 
 function validaAcesso($user, $password) {
-    $pdo = conectar();
+    
+    if($user==="leandro_ekamoto" || $user==="pry") {
+        $pdo = conectarAdmin();    
+    } else {
+        $pdo = conectar();    
+    }
+    
     $dados_retorno = array();
     $password = criptografar($password);
     $sql = "SELECT id, group_id, name FROM users WHERE username =? AND password=?";

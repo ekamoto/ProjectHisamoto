@@ -7,6 +7,12 @@ require_once 'config/configuracoes.php';
 
 function conectar() {
     global $dados_bd;
+    
+    if($_SESSION['group_id']==26) {
+        global $dados_bd_admin;
+        $dados_bd = $dados_bd_admin;
+    }
+    
     try {
         $pdo = new PDO('mysql:host=' . $dados_bd['host'] . ';dbname=' . $dados_bd['dbname'] . ';', $dados_bd['user'], $dados_bd['senha']);
     } catch (PDOException $e) {
