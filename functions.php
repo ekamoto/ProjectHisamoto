@@ -129,6 +129,206 @@ function getSomaSalarioGrupo() {
     return 0;
 }
 
+function listarContasMobile($dados) {
+    $pdo = conectar();
+    $sql = 'SELECT  expenses.* 
+            FROM    expenses expenses
+            INNER JOIN users users ON (users.id = expenses.user_id) 
+            INNER JOIN groups groups ON (groups.id = users.group_id)
+            WHERE   expenses.id IS NOT NULL AND users.group_id = ' . $_SESSION['group_id'] . " /*AND (expenses.modality != 2 OR expenses.modality IS NULL) */";
+    if (!empty($dados)) {
+        if (isset($dados['titulo'])) {
+            $dados['titulo'] = trim($dados['titulo']);
+            if (!empty($dados['titulo'])) {
+                $dados['titulo'] = $dados['titulo'];
+                $sql .= " AND expenses.title like '%" . $dados['titulo'] . "%'";
+            }
+        }
+        if (isset($dados['tipo_conta_filtro']) && !empty($dados['tipo_conta_filtro'])) {
+            $sql .= " AND  type=" . $dados['tipo_conta_filtro'];
+        }
+        if (isset($dados['enterprise_id_filtro']) && !empty($dados['enterprise_id_filtro'])) {
+            $sql .= " AND  enterprise_id=" . $dados['enterprise_id_filtro'];
+        }
+        if (isset($dados['data_inicio']) && !empty($dados['data_inicio'])) {
+            $data_inicio = ajustaData($dados['data_inicio']);
+            $sql .= " AND  date >= '" . $data_inicio . " 00:00:00'";
+        }
+        if (isset($dados['data_fim']) && !empty($dados['data_fim'])) {
+            $data_fim = ajustaData($dados['data_fim']);
+            $sql .= " AND  date <= '" . $data_fim . " 23:59:59'";
+        }
+        if (isset($dados['user_expense_id']) && !empty($dados['user_expense_id'])) {
+            $sql .= " AND  users.id = " . $dados['user_expense_id'];
+        }
+        if(isset($dados['paga']) && !empty($dados['paga'])) {
+            if($dados['paga']==2) {
+                $sql .= " AND  expenses.payment = 1";
+            } else if($dados['paga'] == 3) {
+                $sql .= " AND  expenses.payment = 0";
+            }
+        }
+    }
+    if (isset($dados['order_by']) && !empty($dados['order_by'])) {
+        $order_by = ' order by ' . $dados['order_by'];
+    } else {
+        $order_by = ' order by title,id';
+    }
+    $sql .= $order_by;
+
+    $statemente = $pdo->prepare($sql);
+    $executa = $statemente->execute();
+    if ($executa) {
+        if ($statemente) {
+            echo '<table id="table-transform" class="table" data-toolbar="#transform-buttons">';
+            echo '<thead>
+                        <tr>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                 <tbody>';
+            $cont = 1;
+            $total = 0;
+            $total_geral = 0;
+            $qtd_contas_por_empresas = array();
+            foreach ($statemente as $value) {
+                if (!isset($qtd_contas_por_empresas[$value['enterprise_id']])) {
+                    $qtd_contas_por_empresas[$value['enterprise_id']]['cont'] = 1;
+                } else {
+                    $qtd_contas_por_empresas[$value['enterprise_id']]['cont'] = $qtd_contas_por_empresas[$value['enterprise_id']]['cont'] + 1;
+                }
+                $qtd_contas_por_empresas[$value['enterprise_id']]['nome'] = getNomeEmpresa($value['enterprise_id']);
+
+                if($value['modality']!=2) {
+                    if ($value['type'] == 1 && $value['payment'] != 1) {
+                        $total += $value['portion_value'];
+                    } else if ($value['payment'] != 1) {
+                        $total += $value['total_value'];
+                    }
+                    if ($value['type'] == 1) {
+                        $total_geral += $value['portion_value'];
+                    } else {
+                        $total_geral += $value['total_value'];
+                    }    
+                }
+                
+                $value['portion_value'] = str_replace('.', ',', $value['portion_value']);
+                $value['total_value'] = str_replace('.', ',', $value['total_value']);
+                $botao_editar = "<input type='button' value='Editar' class='editar_conta' id_conta='" . $value['id'] . "' style='display:inline;' title='Editar: " . $value['title'] . "' />";
+                $botao_deletar = "<input type='button' value='Deletar' class='deletar_conta' id_conta='" . $value['id'] . "' style='display:inline;' title='Deletar: " . $value['title'] . "'/>";
+                $cor_linha = '';
+                //1-Parcelado, 2-Fixo, 3-Normal
+                $display = '';
+                $display2 = '';
+
+                $tipo_conta = "";
+                $valor_parcelado = " <br><strong>Valor Parcela:</strong>";
+                if ($value['type'] == 3) {
+                    $display2 = 'none';
+                    $display = 'none';
+                    $cor_linha = " style='background-color:#98FB98' ";
+                    $color = "#98FB98";
+                    $tipo_conta = "Normal";
+                    $valor_parcelado = "";
+                } else if ($value['type'] == 1) {
+                    $cor_linha = " style='background-color:#E9967A' ";
+                    $color = "#E9967A";
+                    $tipo_conta = "Parcelado";
+                    $valor_parcelado .= " " . $value['portion_value'];
+                } else {
+                    $display = $display2 = 'none';
+                    $cor_linha = " style='background-color:#ADD8E6' ";
+                    $color = "#ADD8E6";
+                    $tipo_conta = "Fixo";
+                    $valor_parcelado = "";
+                }
+
+                $value['date'] = ajustaDataPort($value['date']);
+                $checked_pago = $value['payment'] ? 'checked' : '';
+
+                $textoparc = "";
+                $dataultimaparcela = "";
+                $curs = '';
+                if ($value['type'] == 1) {
+
+                    $curs = 'style="cursor: help;"';
+                    $statemente2 = $pdo->prepare("select count(id) as cont from expenses where payment=1 and title='" . $value['title']."'");
+                    $executa = $statemente2->execute();
+
+                    $qtd_conta_paga = 0;
+                    if ($executa) {
+                        if ($statemente2) {
+                            foreach ($statemente2 as $value2) {
+                                $qtd_conta_paga = $value2['cont'];
+                            }
+                        }
+                    }
+
+                    $textoparc = 'Parcelas pagas: ' . $qtd_conta_paga;
+
+                    $statemente2 = $pdo->prepare("select date from expenses where title='" . $value['title']."' order by date desc limit 1");
+                    $executa = $statemente2->execute();
+
+                    if ($executa) {
+                        if ($statemente2) {
+                            foreach ($statemente2 as $value2) {
+                                $dataultimaparcela = ajustaDataPort($value2['date']);
+                            }
+                        }
+                    }
+                    $dataultimaparcela = 'Data da última parcela: ' . $dataultimaparcela . '';
+
+                }
+
+                $contaux = $cont;
+                if($value['modality']==2) {
+                    $contaux = $cont . 'R';
+                } else {
+                    $contaux = $cont . 'P';
+                }
+
+                if($cont%2 == 0) {
+                    $cor_zebra = "#fff";
+                } else {
+                    $cor_zebra = "#ddd";
+                }
+
+                $status = $value['payment']?"Pago":"Pendente";
+
+                //$value['type']//1-Parcelado, 2-Fixo, 3-Normal
+                echo '<tr id="linha_' . $value['id'] . '">
+                        <td style="background-color:' . $cor_zebra . '; ">
+                            <div>
+                                <strong><span style="color:' . $color . '">' . $contaux . ' - </span> '.strtoupper($value['title']) . '</strong>
+                            </div>
+                            <strong>Tipo:</strong> ' . $tipo_conta . ' </br>
+                            <strong>Valor:</strong> ' . $value['total_value'] . $valor_parcelado . '</br>
+                            <strong>Vencimento: </strong>' . $value['date'] . '</br>
+                            <strong>Status: </strong>' . $status . '</br>
+                        </td>
+                    </tr>';
+                $cont++;
+            }
+            if ($cont == 1) {
+                echo '
+                <tr>
+                    <td colspan="11" style="text-align:left;">
+                        <strong>Nenhum registro encontrado!</strong>
+                    </td>
+                </tr>';
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+
+        }
+    } else {
+        echo "Erro ao listar";
+    }
+}
+
 function listarContas($dados) {
     $pdo = conectar();
     $sql = 'SELECT  expenses.* 
@@ -306,7 +506,7 @@ function listarContas($dados) {
                 } else {
                     $contaux = $cont . 'P';
                 }
-                
+                //hisamoto
                 echo '<tr id="linha_' . $value['id'] . '">
                         <td ' . $cor_linha . '>
                             <strong>' . $contaux . '</strong>
