@@ -27,6 +27,7 @@ include 'permission.php';
         <link rel="stylesheet" type="text/css" href="js/lib/CodeSeven-toastr-0ad3ca3/toastr.css" />
         <link rel="stylesheet" type="text/css" href="js/lib/CodeSeven-toastr-0ad3ca3/toastr.min.css" />
         <link rel="stylesheet" type="text/css" href="css/flot.css" />
+       
     </head>
     <body style="text-align: left; font-family: monospace;  background-repeat: no-repeat ; background-attachment: fixed; background-size: 100% 100%; margin:0; padding:0;">
         <div id="smoothmenu1" class="ddsmoothmenu shadow">

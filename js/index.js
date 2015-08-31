@@ -91,45 +91,57 @@ $(function() {
     });
     $("#editar_todos").on('click', function() {
         if (confirm('Tem certeza que deseja editar todas as contas selecionadas?')) {
-            $(".seleciona_conta").each(function() {
-                if ($(this).is(":checked")) {
-                    conta.editarConta($(this).val());
-                }
-            });
-            sistema.atualizarPagina();
+            bloquearTela(true);
+            setTimeout(function() { 
+                $(".seleciona_conta").each(function() {
+                    if ($(this).is(":checked")) {
+                        conta.editarConta($(this).val());
+                    }
+                });
+                sistema.atualizarPagina();
+            }, 3000);
         }
     });
     $("#editar_todos_conta_atrasada").on('click', function() {
         if (confirm('Tem certeza que deseja editar todas as contas atrasadas selecionadas?')) {
-            $(".seleciona_conta_atrasada").each(function() {
-                if ($(this).is(":checked")) {
-                    conta.editarContaAtrasada($(this).val());
-                }
-            });
-            sistema.atualizarPagina();
+            bloquearTela(true);
+            setTimeout(function() { 
+                $(".seleciona_conta_atrasada").each(function() {
+                    if ($(this).is(":checked")) {
+                        conta.editarContaAtrasada($(this).val());
+                    }
+                });
+                sistema.atualizarPagina();
+            }, 3000);
         }
     });
     $("#deletar_todos").on('click', function() {
         if (confirm('Tem certeza que deseja deletar todas as contas selecionadas?')) {
-            $(".seleciona_conta").each(function() {
-                if ($(this).is(":checked")) {
-                    conta.deletarConta($(this).val());
-                    $("#linha_" + $(this).val()).remove();
-                }
-            });
+            bloquearTela(true);
+            setTimeout(function() { 
+                $(".seleciona_conta").each(function() {
+                    if ($(this).is(":checked")) {
+                        conta.deletarConta($(this).val());
+                        $("#linha_" + $(this).val()).remove();
+                    }
+                });
+                sistema.atualizarPagina();
+            }, 3000);
         }
-        sistema.atualizarPagina();
     });
     $("#deletar_todos_conta_atrasada").on('click', function() {
         if (confirm('Tem certeza que deseja deletar todas as contas atrasadas selecionadas?')) {
-            $(".seleciona_conta_atrasada").each(function() {
-                if ($(this).is(":checked")) {
-                    conta.deletarConta($(this).val());
-                    $("#linha_" + $(this).val()).remove();
-                }
-            });
+           bloquearTela(true);
+           setTimeout(function() { 
+                $(".seleciona_conta_atrasada").each(function() {
+                    if ($(this).is(":checked")) {
+                        conta.deletarConta($(this).val());
+                        $("#linha_" + $(this).val()).remove();
+                    }
+                });
+                sistema.atualizarPagina();
+            }, 3000);
         }
-        sistema.atualizarPagina();
     });
     $("#id_cadastrar").on('click', function() {
         $(".nova_conta input:text").val("");
