@@ -27,7 +27,6 @@ include 'permission.php';
         <link rel="stylesheet" type="text/css" href="js/lib/CodeSeven-toastr-0ad3ca3/toastr.css" />
         <link rel="stylesheet" type="text/css" href="js/lib/CodeSeven-toastr-0ad3ca3/toastr.min.css" />
         <link rel="stylesheet" type="text/css" href="css/flot.css" />
-       
     </head>
     <body style="text-align: left; font-family: monospace;  background-repeat: no-repeat ; background-attachment: fixed; background-size: 100% 100%; margin:0; padding:0;">
         <div id="smoothmenu1" class="ddsmoothmenu shadow">
@@ -351,6 +350,9 @@ include 'permission.php';
                     <tr>
                         <td colspan="2" style="text-align: right;">
                             <input type="button" id="salvar_anotacao" value="Cadastrar"/>
+                             <?php if ($admin): ?>
+                            <input type="button" id="gerar_gasto_padrao_cadastro" value="Gerar gasto padrão"/>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <tr>

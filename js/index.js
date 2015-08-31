@@ -388,6 +388,12 @@ $(function() {
             descricao_anotacao: $("#edit_descricao_anotacao").val()
         });
     });
+    $("#gerar_gasto_padrao_cadastro").on("click", function() {
+        noteController.gerarGastoPadraoCadastro({
+            action: "gerarGastoPadrao",
+            descricao_anotacao: $("#descricao_anotacao").val()
+        });
+    });
     $("#salvar_anotacao").on("click", function() {        
         var msg_erro = '';
         $("#msg_cadastro_anotacao").html('');
