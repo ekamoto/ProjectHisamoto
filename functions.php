@@ -216,8 +216,8 @@ function listarContasMobile($dados) {
                 
                 $value['portion_value'] = str_replace('.', ',', $value['portion_value']);
                 $value['total_value'] = str_replace('.', ',', $value['total_value']);
-                $botao_editar = "<input type='button' value='Editar' class='editar_conta' id_conta='" . $value['id'] . "' style='display:inline;' title='Editar: " . $value['title'] . "' />";
-                $botao_deletar = "<input type='button' value='Deletar' class='deletar_conta' id_conta='" . $value['id'] . "' style='display:inline;' title='Deletar: " . $value['title'] . "'/>";
+                $editar = "<span>Editar</span>";
+                $deletar = "<span class='deletar_conta' id_conta='" . $value['id'] . "' style='display:inline;' " . $value['title'] . "'/>Deletar</span>";
                 $cor_linha = '';
                 //1-Parcelado, 2-Fixo, 3-Normal
                 $display = '';
@@ -284,9 +284,9 @@ function listarContasMobile($dados) {
 
                 $contaux = $cont;
                 if($value['modality']==2) {
-                    $contaux = $cont . 'R';
+                    $contaux = $cont . 'R'; // Receber
                 } else {
-                    $contaux = $cont . 'P';
+                    $contaux = $cont . 'P'; // Pagar
                 }
 
                 if($cont%2 == 0) {
@@ -302,11 +302,13 @@ function listarContasMobile($dados) {
                         <td style="background-color:' . $cor_zebra . '; ">
                             <div>
                                 <strong><span style="color:' . $color . '">' . $contaux . ' - </span> '.strtoupper($value['title']) . '</strong>
+                                [' . $deletar . '/' . $editar . ']
                             </div>
                             <strong>Tipo:</strong> ' . $tipo_conta . ' </br>
                             <strong>Valor:</strong> ' . $value['total_value'] . $valor_parcelado . '</br>
                             <strong>Vencimento: </strong>' . $value['date'] . '</br>
                             <strong>Status: </strong>' . $status . '</br>
+                            <input type="text" id="title_' . $value['id'] . '" value="' . $value['title'] . '" title="' . $value['description'] . '" style="cursor: help; display:none;">
                         </td>
                     </tr>';
                 $cont++;

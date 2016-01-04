@@ -4,6 +4,10 @@ if (isset($_SESSION['id_user'])) {
     session_destroy();
 }
 
+if(!empty($_SESSION['device']) && $_SESSION['device']!=='Desktop') {
+    header("location:index_mobile.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,7 +109,7 @@ if (isset($_SESSION['id_user'])) {
       <hr>
 
       <footer>
-        <p>&copy; Company 2014</p>
+        <p>&copy; Company 2016</p>
       </footer>
     </div> <!-- /container -->
 
