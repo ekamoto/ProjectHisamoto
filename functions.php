@@ -332,12 +332,14 @@ function listarContasMobile($dados) {
 }
 
 function listarContas($dados) {
+    
     $pdo = conectar();
     $sql = 'SELECT  expenses.* 
             FROM    expenses expenses
             INNER JOIN users users ON (users.id = expenses.user_id) 
             INNER JOIN groups groups ON (groups.id = users.group_id)
             WHERE   expenses.id IS NOT NULL AND users.group_id = ' . $_SESSION['group_id'] . " /*AND (expenses.modality != 2 OR expenses.modality IS NULL) */";
+    
     if (!empty($dados)) {
         if (isset($dados['titulo'])) {
             $dados['titulo'] = trim($dados['titulo']);
@@ -1761,7 +1763,9 @@ $mes = '';
 $id_grupo = '';
 $paga='';
 if (!empty($_REQUEST)) {
+    
     $dados = getDadosRequest($_REQUEST);
+
     $titulo = isset($dados['titulo']) ? $dados['titulo'] : '';
     $enterprise_id_filtro = isset($dados['enterprise_id_filtro']) ? $dados['enterprise_id_filtro'] : '';
     $order_by = isset($dados['order_by']) ? $dados['order_by'] : '';

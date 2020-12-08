@@ -1,5 +1,8 @@
 <?php
-session_start('acesso');
+
+session_start();
+
+
 if (!isset($_SESSION['id_user'])) {
     die('Acesso Negado!');
 }

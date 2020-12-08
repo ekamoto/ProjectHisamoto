@@ -3,7 +3,7 @@
 require_once '../config/configuracoes.php';
 
 if (!isset($_SESSION['id_user'])) {
-    session_start('acesso');
+    session_start();
 }
 
 function startSession($id_user, $group_id, $name) {
@@ -37,6 +37,7 @@ function startSession($id_user, $group_id, $name) {
 
 function conectar() {
     global $dados_bd;
+    
     try {
         $pdo = new PDO('mysql:host=' . $dados_bd['host'] . ';dbname=' . $dados_bd['dbname'] . ';', $dados_bd['user'], $dados_bd['senha']);
     } catch (PDOException $e) {
@@ -48,6 +49,7 @@ function conectar() {
 
 function conectarAdmin() {
     global $dados_bd_admin;
+
     try {
         $pdo = new PDO('mysql:host=' . $dados_bd_admin['host'] . ';dbname=' . $dados_bd_admin['dbname'] . ';', $dados_bd_admin['user'], $dados_bd_admin['senha']);
     } catch (PDOException $e) {
@@ -81,6 +83,8 @@ function validaAcesso($user, $password) {
     
     $dados_retorno = array();
     $password = criptografar($password);
+
+
     $sql = "SELECT id, group_id, name FROM users WHERE username =? AND password=?";
     $statemente = $pdo->prepare($sql);
     $statemente->bindParam(1, $user, PDO::PARAM_STR);
@@ -115,6 +119,8 @@ if (isset($_POST) && !empty($_POST)) {
             $ok = false;
             $dados_retorno = array();
             $dados_retorno = validaAcesso($dados['user'], $dados['password']);
+            
+
             if (!empty($dados_retorno)) {
                startSession($dados_retorno['id'], $dados_retorno['group_id'], $dados_retorno['name']);
                $ok = true;

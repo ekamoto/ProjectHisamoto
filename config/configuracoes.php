@@ -5,8 +5,8 @@ $dados_bd = array(  'host' => 'localhost',
                     'user' => 'root',
                     'senha' => 'analisesistemas');
 $dados_bd_admin = array();
-$dados_bd_admin = array(  'host' => 'localhost',
-                    'dbname' => 'System',
+$dados_bd_admin = array(  'host' => 'localhost:3308',
+                    'dbname' => 'hisamotosystem',
                     'user' => 'root',
-                    'senha' => 'analisesistemas');
+                    'senha' => '');
 $conf_contas = array('qtd_meses_conta_fixa'=>120);
