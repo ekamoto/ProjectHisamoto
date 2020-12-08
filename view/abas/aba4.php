@@ -1,4 +1,6 @@
-<?php echo "<br/>
+<?php 
+/*
+echo "<br/>
 <div id='manual' style='height:400px; width:100%; text-align:justify; overflow: auto;'>
     <strong>Sistema Financeiro</strong><br/><br/>
     O sistema tem como principal objetivo auxiliar fam&iacute;lias no gerenciamento de suas contas. Permitindo visualizar gastos, planejar compras,
@@ -29,3 +31,4 @@
 <strong>Observa&ccedil;&atilde;o:</strong><br/>
 -&Eacute; importante manter os t&iacute;tulos das contas diferentes pois facilita o seu gerenciamento.
 </div><br/><br/>";
+ **/

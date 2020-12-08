@@ -1,40 +1,25 @@
-$(function () {
-    if(data_1_grafico_4.length>0) {
-        var chart;
-        chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'grafico4',
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false
-            },
-            title: {
-                text: ''
-            },
-            tooltip: {
-                formatter: function() {
-                    return '<b>'+ this.point.name +'</b>: '+ this.point.y +' conta(s)';
-                }
-            },
-            plotOptions: {
+$(function() {
+    var placeholder = $("#placeholder");
+    placeholder.unbind();
+    var data = data_1_grafico_4;
+    
+    if(data.length > 0) {
+        $.plot('#placeholder', data, {
+            series: {
                 pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        connectorColor: '#000000',
-                        formatter: function() {
-                            return this.point.name;
-                        }
-                    }
+                    show: true
                 }
             },
-            series: [{
-                type: 'pie',
-                name: 'Browser share',
-                data: data_1_grafico_4
-            }]
+            legend: {
+                show: false
+            }
         });
+    }
+    
+    function labelFormatter(label, series) {
+        return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
+    }
+    function setCode(lines) {
+        $("#code").text(lines.join("\n"));
     }
 });

@@ -10,7 +10,14 @@ sistema.getAno = function() {
     return this.hoje.getFullYear();
 };
 sistema.atualizarPagina = function() {
-    $("#consultar_conta").trigger("click");
+
+    bloquearTelaCustomizado(true, "Carregando Dados");
+
+    setTimeout(function() { 
+
+        $("#consultar_conta").trigger("click");
+    }, 3000);
+    
 };
 sistema.fecharDialog = function(class_dialog) {
     $('.dialog').dialog({
@@ -288,6 +295,27 @@ function bloquearTela(bool) {
         $.unblockUI();
     }
 }
+
+function bloquearTelaCustomizado(bool, string) {
+    if (bool) {
+        $.blockUI({
+            css: {
+                border: 'none',
+                padding: '15px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff'
+            },
+            message: string
+        });
+    }
+    else {
+        $.unblockUI();
+    }
+}
+
 var usuario = {};
 usuario.add = function(dados) {
     $.ajax({
@@ -331,7 +359,7 @@ usuario.carregarDados = function(callback) {
             Util.setSelectByValue("group_id_edit", ret.group_id);
             $("#name_edit").val(ret.name);
             $("#username_edit").val(ret.username);
-            $("#password_edit").val(ret.password);
+            //$("#password_edit").val(ret.password);
             $("#email_edit").val(ret.email);
             Util.setSelectByValue("sex_edit", ret.sex);
             $("#age_edit").val(ret.age);

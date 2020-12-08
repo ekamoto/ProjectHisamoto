@@ -19,3 +19,47 @@ noteView.setQtdAnotacaoNaoLida = function(msg) {
         $("#anotacoes_nao_lidas").html(cont + " anotação(ões) não lida(s)");
     }
 };
+noteView.setListaNotesNaoLidas = function(listaNotes) {
+    $(".mensagem_sistema").html("");
+    $.each(listaNotes, function(key, note) {
+        var fieldset = $("<fieldset/>");
+        var legend = $("<legend>");
+        var checkbox = $("<input type=\"checkbox\" class=\"lido\" id_note=\"" + note.id + "\"\>");
+        checkbox.on("click", function(){
+           if (!$(this).is(":checked")) {
+                $.ajax({
+                    url:"controller/noteController.php",
+                    type:"POST",
+                    data:{action:"not_ler_note", id_note:$(this).attr("id_note")},
+                    dataType:"JSON",
+                    success: function(json) {
+                        sistema.alertMessage("Mensagem", json.msg, "error");
+                        $("#msg").html('Msg: ' + json.msg);
+                    }
+                });
+           } else {
+                 $.ajax({
+                    url:"controller/noteController.php",
+                    type:"POST",
+                    data:{"action":"ler_note", id_note:$(this).attr("id_note")},
+                    dataType:"JSON",
+                    success: function(json) {
+                        $("#msg").html('Msg: ' + json.msg);
+                        sistema.alertMessage("Mensagem", json.msg, "success");
+                    }
+                });
+           }
+           noteController.getQtdAnotacoesNaoLidas();
+        });
+        legend.append(Util.ajustaDataPortugues(note.date_note));
+        legend.css("font-weight", "bold");
+        fieldset.append(legend);
+        fieldset.append(checkbox);
+        var span = $("<span/>");
+        span.html("Lido");
+        span.css("font-weight", "bold");
+        fieldset.append(span);
+        fieldset.append("<pre>"+note.description+"</pre>");
+        $(".mensagem_sistema").append(fieldset);
+    });
+};

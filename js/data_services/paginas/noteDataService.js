@@ -28,4 +28,11 @@ function noteDataService() {
                 successCallback.apply(this, params);
         }, errorCallback);
     };
+    this.getAnotacoesNaoLidas = function(data, successCallback, errorCallback) {
+        return base.post(this.url, data, function(json) {
+                var params = new Array();
+                params.push(json);
+                successCallback.apply(this, params);
+        }, errorCallback);
+    };
 }

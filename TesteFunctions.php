@@ -1,4 +1,5 @@
 <?php
+
 include './functions.php';
 /**
  * Classe para testar as funções do sistema
